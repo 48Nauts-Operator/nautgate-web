@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/style.css?v=1">
+<link rel="stylesheet" href="/css/style.css?v=3">
 
 <script defer src="https://wave.21nauts.com/script.js" data-website-id="57597b5e-75ea-4dbb-b503-610be0e39f1c"></script>
 </head>
@@ -53,119 +53,137 @@
   <p>Gateway, routing and evidence terms as NautGate means them — not as the industry loosely uses them. Each one maps to something the code actually does.</p>
 </div>
 
+<div class="glossary-search">
+  <label class="search-box">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M10.8 10.8 14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <input type="search" id="q" placeholder="Type to filter terms — try &quot;cache&quot;, &quot;offline&quot;, &quot;routing&quot;" autocomplete="off" aria-label="Filter glossary terms">
+  </label>
+</div>
+
 <div class="filters" id="filters">
-  <button aria-pressed="true" data-cat="all">All terms · 17</button>
+  <button aria-pressed="true" data-cat="all">All terms · 18</button>
   <button aria-pressed="false" data-cat="routing">Routing · 6</button>
   <button aria-pressed="false" data-cat="evidence">Evidence · 5</button>
-  <button aria-pressed="false" data-cat="cost">Cost · 3</button>
+  <button aria-pressed="false" data-cat="cost">Cost · 4</button>
   <button aria-pressed="false" data-cat="local">Local · 3</button>
 </div>
 
 <main class="terms" id="terms">
 
-  <article class="term" data-cat="routing">
+  <article class="term" id="attested-model" data-cat="routing" data-related="silent-substitution decision-id" tabindex="0" role="button" aria-label="Open definition: Attested model">
     <div class="top"><h2>Attested model</h2><span class="pill">Routing</span></div>
-    <p>The model name parsed out of the provider's own response, rather than copied from the request. It is the only field that can be trusted to say what generated the tokens — and it is what makes every other claim on this site checkable, because you can line it up against the provider's billing dashboard token for token.</p>
+    <p class="def">The model name parsed out of the provider's own response, rather than copied from the request. It is the only field that can be trusted to say what generated the tokens — and it is what makes every other claim on this site checkable, because you can line it up against the provider's billing dashboard token for token.</p>
     <p class="tags"><span>#evidence</span><span>#routing</span></p>
   </article>
 
-  <article class="term" data-cat="routing">
+  <article class="term" id="silent-substitution" data-cat="routing" data-related="attested-model drift" tabindex="0" role="button" aria-label="Open definition: Silent substitution">
     <div class="top"><h2>Silent substitution</h2><span class="pill">Routing</span></div>
-    <p>When you ask for one model and a different one answers, while the response still claims to be what you asked for. Usually a routing table gap rather than malice — but you cannot detect it by asking the model, because a client's system prompt tells it who to say it is. The flow view highlights the exact hop where the name changed.</p>
+    <p class="def">When you ask for one model and a different one answers, while the response still claims to be what you asked for. Usually a routing table gap rather than malice — but you cannot detect it by asking the model, because a client's system prompt tells it who to say it is. The flow view highlights the exact hop where the name changed.</p>
     <p class="tags"><span>#routing</span><span>#trust</span></p>
   </article>
 
-  <article class="term" data-cat="routing">
+  <article class="term" id="passthrough-lane" data-cat="routing" data-related="subscription-saved model-override" tabindex="0" role="button" aria-label="Open definition: Passthrough lane">
     <div class="top"><h2>Passthrough lane</h2><span class="pill">Routing</span></div>
-    <p>Subscription traffic, recognised by its OAuth token and forwarded to the provider untouched so the plan still covers it. Fully logged, never re-routed. The other lane is metered: an API key that bills per token. Keeping them apart is what lets a Max plan and a routed model coexist without either one quietly paying for the other.</p>
+    <p class="def">Subscription traffic, recognised by its OAuth token and forwarded to the provider untouched so the plan still covers it. Fully logged, never re-routed. The other lane is metered: an API key that bills per token. Keeping them apart is what lets a Max plan and a routed model coexist without either one quietly paying for the other.</p>
     <p class="tags"><span>#routing</span><span>#cost</span></p>
   </article>
 
-  <article class="term" data-cat="routing">
+  <article class="term" id="model-override" data-cat="routing" data-related="decide-ladder harness" tabindex="0" role="button" aria-label="Open definition: Model override">
     <div class="top"><h2>Model override</h2><span class="pill">Routing</span></div>
-    <p>A model pinned to an API key, so every request on that key is served by it regardless of what the client asked for. This is how a client with no model setting of its own gets one — Claude Code has no such switch, but launch it against a pinned key and something else entirely drives the harness.</p>
+    <p class="def">A model pinned to an API key, so every request on that key is served by it regardless of what the client asked for. This is how a client with no model setting of its own gets one — Claude Code has no such switch, but launch it against a pinned key and something else entirely drives the harness.</p>
     <p class="tags"><span>#routing</span><span>#clients</span></p>
   </article>
 
-  <article class="term" data-cat="routing">
+  <article class="term" id="decide-ladder" data-cat="routing" data-related="tier model-override" tabindex="0" role="button" aria-label="Open definition: DECIDE ladder">
     <div class="top"><h2>DECIDE ladder</h2><span class="pill">Routing</span></div>
-    <p>The fixed precedence that picks a model: per-request header, then per-key override, then the caller's stated preference, then the tier score. Every rung is recorded with the decision, so "why did this call go there" is a lookup rather than an argument.</p>
+    <p class="def">The fixed precedence that picks a model: per-request header, then per-key override, then the caller's stated preference, then the tier score. Every rung is recorded with the decision, so "why did this call go there" is a lookup rather than an argument.</p>
     <p class="tags"><span>#routing</span><span>#internals</span></p>
   </article>
 
-  <article class="term" data-cat="routing">
+  <article class="term" id="tier" data-cat="routing" data-related="decide-ladder carrying-cost" tabindex="0" role="button" aria-label="Open definition: Tier">
     <div class="top"><h2>Tier</h2><span class="pill">Routing</span></div>
-    <p>A difficulty band — fast, balanced, deep, expert — scored from the prompt so that <code class="mono">model: auto</code> can pick something proportionate instead of always reaching for the biggest thing available. Most requests are not hard; paying frontier prices for all of them is the default waste this is aimed at.</p>
+    <p class="def">A difficulty band — fast, balanced, deep, expert — scored from the prompt so that <code class="mono">model: auto</code> can pick something proportionate instead of always reaching for the biggest thing available. Most requests are not hard; paying frontier prices for all of them is the default waste this is aimed at.</p>
     <p class="tags"><span>#routing</span><span>#cost</span></p>
   </article>
 
-  <article class="term" data-cat="evidence">
+  <article class="term" id="decision-id" data-cat="evidence" data-related="attested-model capture-policy" tabindex="0" role="button" aria-label="Open definition: Decision id">
     <div class="top"><h2>Decision id</h2><span class="pill">Evidence</span></div>
-    <p>The identifier for a single call, joining what was asked, what was decided, what came back and what it cost. The thing to quote in a bug report — it pulls up the whole chain, including the captured prompt and response if policy allowed them to be stored.</p>
+    <p class="def">The identifier for a single call, joining what was asked, what was decided, what came back and what it cost. The thing to quote in a bug report — it pulls up the whole chain, including the captured prompt and response if policy allowed them to be stored.</p>
     <p class="tags"><span>#evidence</span><span>#support</span></p>
   </article>
 
-  <article class="term" data-cat="evidence">
+  <article class="term" id="capture-policy" data-cat="evidence" data-related="decision-id zero-egress" tabindex="0" role="button" aria-label="Open definition: Capture policy">
     <div class="top"><h2>Capture policy</h2><span class="pill">Evidence</span></div>
-    <p>The rule deciding whether a prompt or response body is stored at all. Content classified as secret is never written; metadata always is. The classification runs before the write, not after — so the gate is on capture itself rather than on redaction of something already on disk.</p>
+    <p class="def">The rule deciding whether a prompt or response body is stored at all. Content classified as secret is never written; metadata always is. The classification runs before the write, not after — so the gate is on capture itself rather than on redaction of something already on disk.</p>
     <p class="tags"><span>#privacy</span><span>#evidence</span></p>
   </article>
 
-  <article class="term" data-cat="evidence">
+  <article class="term" id="drift" data-cat="evidence" data-related="silent-substitution shadow-trial" tabindex="0" role="button" aria-label="Open definition: Drift">
     <div class="top"><h2>Drift</h2><span class="pill">Evidence</span></div>
-    <p>A model behaving measurably differently than it did last week — slower, shorter, emptier — detected against its own recorded baseline rather than a vibe. Providers change what sits behind a model name without changing the name, and this is the only way to notice.</p>
+    <p class="def">A model behaving measurably differently than it did last week — slower, shorter, emptier — detected against its own recorded baseline rather than a vibe. Providers change what sits behind a model name without changing the name, and this is the only way to notice.</p>
     <p class="tags"><span>#evidence</span><span>#quality</span></p>
   </article>
 
-  <article class="term" data-cat="evidence">
+  <article class="term" id="head-to-head" data-cat="evidence" data-related="shadow-trial context-ratio" tabindex="0" role="button" aria-label="Open definition: Head-to-head">
     <div class="top"><h2>Head-to-head</h2><span class="pill">Evidence</span></div>
-    <p>Real calls grouped by the task they answered, so two models are compared on the same prompt. Averaging a model across all its traffic hides the truth: models get handed different work, and the cheap one often looks better only because it was given easier questions.</p>
+    <p class="def">Real calls grouped by the task they answered, so two models are compared on the same prompt. Averaging a model across all its traffic hides the truth: models get handed different work, and the cheap one often looks better only because it was given easier questions.</p>
     <p class="tags"><span>#evidence</span><span>#benchmarks</span></p>
   </article>
 
-  <article class="term" data-cat="evidence">
+  <article class="term" id="shadow-trial" data-cat="evidence" data-related="head-to-head drift" tabindex="0" role="button" aria-label="Open definition: Shadow trial">
     <div class="top"><h2>Shadow trial</h2><span class="pill">Evidence</span></div>
-    <p>A cheaper model answering the same prompt in the background, scored blind against the one you actually shipped. Tells you what downgrading would really cost before you commit to it — champion-challenger, run on your own traffic instead of a public benchmark.</p>
+    <p class="def">A cheaper model answering the same prompt in the background, scored blind against the one you actually shipped. Tells you what downgrading would really cost before you commit to it — champion-challenger, run on your own traffic instead of a public benchmark.</p>
     <p class="tags"><span>#evidence</span><span>#cost</span></p>
   </article>
 
-  <article class="term" data-cat="cost">
+  <article class="term" id="subscription-saved" data-cat="cost" data-related="passthrough-lane carrying-cost" tabindex="0" role="button" aria-label="Open definition: Subscription saved">
     <div class="top"><h2>Subscription saved</h2><span class="pill">Cost</span></div>
-    <p>The list price of everything your flat-rate plan covered — what the same work would have cost through the metered API. Notional, not billed: it is the number that tells you whether the plan is earning its keep, and it is usually far larger than people expect.</p>
+    <p class="def">The list price of everything your flat-rate plan covered — what the same work would have cost through the metered API. Notional, not billed: it is the number that tells you whether the plan is earning its keep, and it is usually far larger than people expect.</p>
     <p class="tags"><span>#cost</span><span>#reporting</span></p>
   </article>
 
-  <article class="term" data-cat="cost">
+  <article class="term" id="prefix-cache" data-cat="cost" data-related="context-ratio carrying-cost" tabindex="0" role="button" aria-label="Open definition: Prefix cache">
+    <div class="top"><h2>Prefix cache</h2><span class="pill">Cost</span></div>
+    <p class="def">Reuse of the work already done on the unchanged front of a prompt — the system prompt and tool schemas that are identical every turn. When it hits, that prefix is near-free; when a prompt changes something early, the whole thing is recomputed. Measured as hit rate, write-to-read ratio, and the dollars saved against the uncached price. Not every local runtime supports it, which is why a model that cannot cache costs far more than its token price suggests.</p>
+    <p class="tags"><span>#cost</span><span>#cache</span></p>
+  </article>
+
+  <article class="term" id="context-ratio" data-cat="cost" data-related="carrying-cost harness" tabindex="0" role="button" aria-label="Open definition: Context ratio">
     <div class="top"><h2>Context ratio</h2><span class="pill">Cost</span></div>
-    <p>Input tokens burned per output token produced. A high ratio usually means tool schemas rather than thinking — and tool schemas are resent every single turn, so the ratio is where invisible spend shows up first.</p>
+    <p class="def">Input tokens burned per output token produced. A high ratio usually means tool schemas rather than thinking — and tool schemas are resent every single turn, so the ratio is where invisible spend shows up first.</p>
     <p class="tags"><span>#cost</span><span>#efficiency</span></p>
   </article>
 
-  <article class="term" data-cat="cost">
+  <article class="term" id="carrying-cost" data-cat="cost" data-related="context-ratio tier" tabindex="0" role="button" aria-label="Open definition: Carrying cost">
     <div class="top"><h2>Carrying cost</h2><span class="pill">Cost</span></div>
-    <p>What your connected tools cost simply by existing — every MCP schema travels in every request whether the model calls it or not. Measured against what those tools save, it is what turns "should I keep this server connected" into an answerable question.</p>
+    <p class="def">What your connected tools cost simply by existing — every MCP schema travels in every request whether the model calls it or not. Measured against what those tools save, it is what turns "should I keep this server connected" into an answerable question.</p>
     <p class="tags"><span>#cost</span><span>#mcp</span></p>
   </article>
 
-  <article class="term" data-cat="local">
+  <article class="term" id="zero-egress" data-cat="local" data-related="offline-mode capture-policy" tabindex="0" role="button" aria-label="Open definition: Zero egress">
     <div class="top"><h2>Zero egress</h2><span class="pill">Local</span></div>
-    <p>No packet leaves the machine — provable by watching its sockets, not by trusting a policy document. The claim a compliance team can actually test: sample the process's connections across a full timer cycle and see nothing but localhost.</p>
+    <p class="def">No packet leaves the machine — provable by watching its sockets, not by trusting a policy document. The claim a compliance team can actually test: sample the process's connections across a full timer cycle and see nothing but localhost.</p>
     <p class="tags"><span>#local</span><span>#compliance</span></p>
   </article>
 
-  <article class="term" data-cat="local">
+  <article class="term" id="offline-mode" data-cat="local" data-related="zero-egress harness" tabindex="0" role="button" aria-label="Open definition: Offline mode">
     <div class="top"><h2>Offline mode</h2><span class="pill">Local</span></div>
-    <p>A switch that stands down every timer-driven outbound call — health probes, credit checks, memory sync. Serving traffic is unaffected, so a local model keeps answering while the gateway stops talking to anyone but itself.</p>
+    <p class="def">A switch that stands down every timer-driven outbound call — health probes, credit checks, memory sync. Serving traffic is unaffected, so a local model keeps answering while the gateway stops talking to anyone but itself.</p>
     <p class="tags"><span>#local</span><span>#airgap</span></p>
   </article>
 
-  <article class="term" data-cat="local">
+  <article class="term" id="harness" data-cat="local" data-related="model-override context-ratio" tabindex="0" role="button" aria-label="Open definition: Harness">
     <div class="top"><h2>Harness</h2><span class="pill">Local</span></div>
-    <p>Everything the client brings — tool implementations, the agent loop, permissions, the system prompt. It belongs to the client, not the model, which is why swapping models underneath a good harness works at all, and why a model's self-report about its own identity is worthless.</p>
+    <p class="def">Everything the client brings — tool implementations, the agent loop, permissions, the system prompt. It belongs to the client, not the model, which is why swapping models underneath a good harness works at all, and why a model's self-report about its own identity is worthless.</p>
     <p class="tags"><span>#local</span><span>#agents</span></p>
   </article>
 
 </main>
+
+<p class="no-results" id="no-results" hidden>No term matches that. <button type="button" id="clear-q">Clear the filter</button></p>
 
 <footer>
   <div class="about">
@@ -204,6 +222,17 @@
   </nav>
 </footer>
 
-<script src="/js/main.js?v=1"></script>
+<dialog class="termbox" id="termbox">
+  <div class="bar"><span class="pill" id="tb-cat"></span><button type="button" aria-label="Close">&#10005;</button></div>
+  <h2 id="tb-name"></h2>
+  <h3>Definition</h3>
+  <p id="tb-def"></p>
+  <h3>Tags</h3>
+  <p class="tags" id="tb-tags"></p>
+  <h3>Related terms</h3>
+  <div class="related" id="tb-related"></div>
+</dialog>
+
+<script src="/js/main.js?v=3"></script>
 </body>
 </html>

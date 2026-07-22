@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/style.css?v=1">
+<link rel="stylesheet" href="/css/style.css?v=3">
 
 <script type="application/ld+json">
 {
@@ -288,26 +288,26 @@
 </div>
 
 <section class="wrap" style="padding-bottom:20px">
-  <div class="shot-frame">
+  <div class="shot-frame shot-main">
     <div class="chrome"><i></i><i></i><i></i><i class="url" style="width:auto;height:auto;border-radius:0;background:none">localhost:8090/dashboard</i></div>
     <img src="/assets/screenshots/overview.png" width="2880" height="1800" loading="lazy" decoding="async" alt="NautGate Overview — provider status cards, intelligence metrics and request charts">
   </div>
-  <p class="caption">Overview — provider status, what the gateway learned from your traffic, and the subscription value it recovered.</p>
+  <p class="caption shot-main">Overview — provider status, what the gateway learned from your traffic, and the subscription value it recovered.</p>
 </section>
 
 <section class="shot-grid">
   <div>
-    <div class="shot-frame"><img src="/assets/screenshots/audit-log-thumb.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Audit Log"></div>
+    <div class="shot-frame"><img src="/assets/screenshots/audit-log-thumb.png" data-full="/assets/screenshots/audit-log.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Audit Log"></div>
     <span class="kicker">Audit log</span>
     <p>Every call, with the model that actually answered and a flow view of the path it took.</p>
   </div>
   <div>
-    <div class="shot-frame"><img src="/assets/screenshots/insights-thumb.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Insights"></div>
+    <div class="shot-frame"><img src="/assets/screenshots/insights-thumb.png" data-full="/assets/screenshots/insights.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Insights"></div>
     <span class="kicker">Insights</span>
     <p>Where context is wasted, which prompts drift, how much of a request is overhead.</p>
   </div>
   <div>
-    <div class="shot-frame"><img src="/assets/screenshots/cost-thumb.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Cost"></div>
+    <div class="shot-frame"><img src="/assets/screenshots/cost-thumb.png" data-full="/assets/screenshots/cost.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Cost"></div>
     <span class="kicker">Cost</span>
     <p>Spend by project, agent and provider — plus what your subscription covered.</p>
   </div>
@@ -360,6 +360,11 @@
   </nav>
 </footer>
 
-<script src="/js/main.js?v=1"></script>
+<dialog class="lightbox" id="lightbox">
+  <div class="bar"><span id="lightbox-label"></span><button type="button" aria-label="Close">&#10005;</button></div>
+  <img id="lightbox-img" src="" alt="">
+</dialog>
+
+<script src="/js/main.js?v=3"></script>
 </body>
 </html>

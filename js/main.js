@@ -9,7 +9,22 @@ if (pill) {
     .catch(() => pill.remove());   // no release yet, or rate-limited — say nothing rather than lie
 }
 
-// 2. Screenshot lightbox. <dialog> gives us Escape, focus trap and the
+// 2. Mobile menu: <details> handles open/close, but an in-page anchor doesn't
+//    navigate, so the panel would stay open over the section you jumped to.
+const menu = document.querySelector(".nav-menu");
+if (menu) {
+  menu.addEventListener("click", (e) => {
+    if (e.target.closest("a")) menu.open = false;
+  });
+  document.addEventListener("click", (e) => {
+    if (menu.open && !menu.contains(e.target)) menu.open = false;
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") menu.open = false;
+  });
+}
+
+// 3. Screenshot lightbox. <dialog> gives us Escape, focus trap and the
 //    backdrop for free — the only JS here is swapping the src.
 const box = document.getElementById("lightbox");
 if (box) {
@@ -32,7 +47,7 @@ if (box) {
   box.addEventListener("close", () => { full.src = ""; });   // stop decoding a hidden image
 }
 
-// 3. Glossary: category chips + search, then a dialog per term.
+// 4. Glossary: category chips + search, then a dialog per term.
 const filters = document.getElementById("filters");
 if (filters) {
   const terms = [...document.querySelectorAll("#terms .term")];

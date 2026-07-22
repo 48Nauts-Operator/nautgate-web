@@ -51,6 +51,21 @@ const ok = counts.all === 18 && counts.routing === 6 && counts.evidence === 5 &&
 console.log(`glossary filter      ${ok ? "✓" : "✗"} ${JSON.stringify(counts)}`);
 if (!ok) fail++;
 
+// mobile menu at a phone width
+const mob = await b.newPage({ viewport: { width: 390, height: 844 } });
+await mob.goto(BASE + "/", { waitUntil: "networkidle" });
+const burgerShown = await mob.isVisible(".nav-menu > summary");
+await mob.click(".nav-menu > summary");
+await mob.waitForTimeout(250);
+const menuOpen = await mob.isVisible(".nav-menu > nav");
+await mob.click(".nav-menu > nav a[href='#features']");
+await mob.waitForTimeout(300);
+const menuClosed = !(await mob.evaluate(() => document.querySelector(".nav-menu").open));
+const mobOk = burgerShown && menuOpen && menuClosed;
+console.log(`mobile menu          ${mobOk ? "\u2713" : "\u2717"}`);
+if (!mobOk) fail++;
+await mob.close();
+
 await p.click('button[data-cat="all"]');        // the loop above left it on "local"
 await p.fill("#q", "cache");
 const searched = await p.$$eval("#terms .term:not([hidden])", (n) => n.length);

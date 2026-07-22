@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NautGate — prove which model actually answered</title>
+<meta name="description" content="An open-source, memory-aware LLM gateway. Route Claude Code, Codex, Pi or your own app to any model — and get a provable record of which model really served each call, what it cost, and what left your machine.">
+<link rel="canonical" href="https://nautgate.dev/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nautgate.dev/">
+<meta property="og:title" content="NautGate — prove which model actually answered">
+<meta property="og:description" content="One gateway for every LLM call — routed, measured, and provably logged. Free and open source under AGPL.">
+<meta property="og:image" content="https://nautgate.dev/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NautGate — prove which model actually answered">
+<meta name="twitter:description" content="One gateway for every LLM call — routed, measured, and provably logged. Free and open source under AGPL.">
+<meta name="twitter:image" content="https://nautgate.dev/assets/og.png">
+
+<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/style.css?v=1">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "NautGate",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "macOS, Linux, Windows (Docker)",
+  "description": "A memory-aware LLM gateway that routes any client to any model and keeps a provable record of which model actually answered, what it cost, and what data left the machine.",
+  "url": "https://nautgate.dev/",
+  "license": "https://www.gnu.org/licenses/agpl-3.0.html",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Organization", "name": "48Nauts", "url": "https://48nauts.com" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does this work with my Claude Max plan?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — subscription traffic passes through untouched and stays free, and it's still fully logged. Routing to a different model uses a metered key instead, so those calls are billed by whichever provider serves them." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you know which model really answered?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It's parsed from the provider's own response, never copied from the request. You can cross-check any call against your provider's billing dashboard — the token counts line up exactly." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I run it with no internet at all?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Point it at a local model and turn on offline mode — every timer-driven outbound call stands down. Verified by sampling the process's sockets across a full cycle: nothing but localhost." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is a small local model actually usable?",
+      "acceptedAnswer": { "@type": "Answer", "text": "For self-contained work, often yes — a local 4-bit MoE beat a frontier model on a single-file build here. Long multi-file agent loops are where frontier models still pull ahead. Pick a model whose KV cache holds, or you pay the harness cost on every turn." }
+    },
+    {
+      "@type": "Question",
+      "name": "What does AGPL mean for me?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Self-host it freely, forever. If you run a modified version as a service for others, publish your changes. A commercial licence is available if you'd rather not." }
+    }
+  ]
+}
+</script>
+
+<script defer src="https://wave.21nauts.com/script.js" data-website-id="57597b5e-75ea-4dbb-b503-610be0e39f1c"></script>
+</head>
+<body>
+
+<header class="nav">
+  <a class="nav-brand" href="/">
+    <svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect width="32" height="32" rx="7" fill="#808000"/>
+      <rect x="4.5" y="8.5" width="23" height="6.6" rx="1" fill="#0A0B00"/>
+      <rect x="7.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
+      <rect x="13.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
+      <rect x="19.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
+    </svg>
+    <span>NautGate</span>
+  </a>
+  <a class="nav-link" href="#features">Features</a>
+  <a class="nav-link" href="https://docs.nautgate.dev/docs">Docs</a>
+  <a class="nav-link" href="/glossary.html">Glossary</a>
+  <a class="nav-link" href="https://github.com/48Nauts-Operator/NautGate">GitHub</a>
+  <div class="nav-spacer"></div>
+  <a class="version-pill" id="version-pill" href="https://github.com/48Nauts-Operator/NautGate/releases">—</a>
+  <a class="btn btn-primary" href="#get-started">&gt;_ GET STARTED</a>
+</header>
+
+<section class="hero">
+  <div class="hero-main">
+    <p class="eyebrow">[ 01 ] The problem</p>
+    <p class="lede">A model will tell you whatever its client's system prompt says it is. Ask it who it is and it lies — politely, confidently, every time.</p>
+    <h1>Prove which model<br>actually answered.</h1>
+    <div class="hero-slug"></div>
+    <p class="sub">One gateway for every LLM call — routed, measured, and provably logged. Point Claude Code, Codex, Pi or your own app at it.</p>
+  </div>
+  <div class="hero-aside">
+    <p class="eyebrow">[ 02 ] The record</p>
+    <dl class="record">
+      <dt>requested</dt>
+      <dd>claude-fable-5</dd>
+      <dt>served</dt>
+      <dd class="hit">moonshotai/kimi-k2.6</dd>
+      <dt>source</dt>
+      <dd>upstream response · not echoed</dd>
+    </dl>
+    <p class="note">Read from what the provider returned, never from what you asked for.</p>
+  </div>
+</section>
+
+<section class="cta-strip" id="get-started">
+  <a class="primary" href="https://docs.nautgate.dev/docs">&gt;_ GET STARTED</a>
+  <a class="secondary" href="https://docs.nautgate.dev/docs">READ THE DOCS</a>
+  <code class="cmd">$ ANTHROPIC_BASE_URL=http://localhost:8090 claude --bare</code>
+</section>
+
+<section class="grid stats">
+  <div class="cell"><span class="stat-n">100%</span><span class="stat-l">Calls logged</span></div>
+  <div class="cell"><span class="stat-n">$0.00</span><span class="stat-l">Local models · zero egress</span></div>
+  <div class="cell"><span class="stat-n">4</span><span class="stat-l">Inbound formats</span></div>
+  <div class="cell"><span class="stat-n">AGPL</span><span class="stat-l">Self-host forever</span></div>
+</section>
+
+<div class="wrap section-head" id="features">
+  <p class="eyebrow">[ 03 ] What it does</p>
+  <h2>Every call, accounted for</h2>
+</div>
+
+<section class="grid features">
+  <div class="cell">
+    <span class="kicker">Attested routing</span>
+    <h3>The served model is read, not echoed</h3>
+    <p>Parsed from the provider's own response. Cross-checkable against their billing dashboard, to the token.</p>
+  </div>
+  <div class="cell">
+    <span class="kicker">Substitution detection</span>
+    <h3>Know when you got something else</h3>
+    <p>Ask for one model, get another, and the flow view shows the hop where it changed — highlighted, not buried.</p>
+  </div>
+  <div class="cell">
+    <span class="kicker">Full audit log</span>
+    <h3>Prompt, response, tokens, cost</h3>
+    <p>Policy-gated capture with PII and secret classification before anything is stored.</p>
+  </div>
+</section>
+
+<section class="grid features">
+  <div class="cell">
+    <span class="kicker">Model override</span>
+    <h3>Run Claude Code on any model</h3>
+    <p>Pin a model to an API key. The client keeps its harness, tools and UX — something else generates the tokens.</p>
+  </div>
+  <div class="cell">
+    <span class="kicker">Local &amp; air-gapped</span>
+    <h3>Nothing leaves the building</h3>
+    <p>LM Studio models, and an offline mode that stands down every outbound call — verifiable at the socket.</p>
+  </div>
+  <div class="cell">
+    <span class="kicker">Head-to-head</span>
+    <h3>Compare models like for like</h3>
+    <p>Real calls grouped by task — context ratio, cost, latency and tool use, on the same prompt.</p>
+  </div>
+</section>
+
+<section class="split">
+  <div class="split-main">
+    <p class="eyebrow">[ 04 ] On-prem</p>
+    <h2>A coding agent that<br>cannot phone home.</h2>
+    <p>Point the gateway at a model on your own hardware and turn on offline mode. The provider heartbeat, the probe scheduler and the credits lookup all stand down. Client code never leaves the building — and the audit log proves it.</p>
+    <div class="split-stats">
+      <div><span class="stat-n">0</span><span class="stat-l">Non-local sockets</span></div>
+      <div><span class="stat-n">2.3s</span><span class="stat-l">Cached 36k prompt</span></div>
+      <div><span class="stat-n">CHF 1.5k</span><span class="stat-l">Hardware, once</span></div>
+    </div>
+  </div>
+  <div class="split-aside">
+    <p class="eyebrow">Socket audit · 70s sample</p>
+    <div class="socket">
+      <span class="state">offline OFF</span>
+      <span class="addr leak">→ 160.79.104.10:443</span>
+      <span class="who">Anthropic, PBC — every 60s</span>
+      <hr>
+      <span class="state">offline ON</span>
+      <span class="addr clean">→ 127.0.0.1 only</span>
+      <span class="who">local model still answering</span>
+    </div>
+  </div>
+</section>
+
+<section class="wrap rule" style="padding-block:52px">
+  <p class="eyebrow" style="margin-bottom:22px">[ 05 ] Point anything at it</p>
+  <div class="clients">
+    <div>
+      <span class="label">Clients in</span>
+      <p>Claude Code · Codex · Pi · Cline · OpenCode · your own app</p>
+    </div>
+    <div>
+      <span class="label">Formats</span>
+      <p>OpenAI Chat · Anthropic Messages · OpenAI Responses · OAuth passthrough</p>
+    </div>
+    <div>
+      <span class="label">Providers out</span>
+      <p>Anthropic · OpenAI · OpenRouter · LM Studio · Ollama · anything local</p>
+    </div>
+  </div>
+</section>
+
+<div class="wrap section-head">
+  <p class="eyebrow">[ 06 ] How it differs</p>
+  <h2>Routers route. This one remembers.</h2>
+</div>
+
+<div class="compare-scroll">
+  <table class="compare">
+    <thead>
+      <tr>
+        <th>Capability</th>
+        <th class="us">NautGate</th>
+        <th>CLI routers</th>
+        <th>Cloud gateways</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Route any client to any model</td>
+        <td class="v us">yes</td><td class="v">yes</td><td class="v">yes</td>
+      </tr>
+      <tr>
+        <td>Served model read from the response</td>
+        <td class="v us">yes</td><td class="v no">no</td><td class="v no">varies</td>
+      </tr>
+      <tr>
+        <td>Prompt + response capture, PII-classified</td>
+        <td class="v us">yes</td><td class="v no">no</td><td class="v">yes</td>
+      </tr>
+      <tr>
+        <td>Runs with zero outbound calls</td>
+        <td class="v us">yes</td><td class="v">yes</td><td class="v no">no</td>
+      </tr>
+      <tr>
+        <td>Your data stays on your infrastructure</td>
+        <td class="v us">yes</td><td class="v">yes</td><td class="v no">no</td>
+      </tr>
+      <tr>
+        <td>Cost per seat</td>
+        <td class="v us">$0</td><td class="v">$0</td><td class="v no">metered</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<section class="faq">
+  <p class="eyebrow" style="margin-bottom:26px">[ 07 ] Questions</p>
+  <details>
+    <summary>Does this work with my Claude Max plan?</summary>
+    <p>Yes — subscription traffic passes through untouched and stays free, and it's still fully logged. Routing to a different model uses a metered key instead, so those calls are billed by whichever provider serves them.</p>
+  </details>
+  <details>
+    <summary>How do you know which model really answered?</summary>
+    <p>It's parsed from the provider's own response, never copied from the request. You can cross-check any call against your provider's billing dashboard — the token counts line up exactly.</p>
+  </details>
+  <details>
+    <summary>Can I run it with no internet at all?</summary>
+    <p>Yes. Point it at a local model and turn on offline mode — every timer-driven outbound call stands down. Verified by sampling the process's sockets across a full cycle: nothing but localhost.</p>
+  </details>
+  <details>
+    <summary>Is a small local model actually usable?</summary>
+    <p>For self-contained work, often yes — a local 4-bit MoE beat a frontier model on a single-file build here. Long multi-file agent loops are where frontier models still pull ahead. Pick a model whose KV cache holds, or you pay the harness cost on every turn.</p>
+  </details>
+  <details>
+    <summary>What does AGPL mean for me?</summary>
+    <p>Self-host it freely, forever. If you run a modified version as a service for others, publish your changes. A commercial licence is available if you'd rather not.</p>
+  </details>
+</section>
+
+<div class="wrap section-head">
+  <p class="eyebrow">[ 08 ] The dashboard</p>
+  <h2>Everything it saw, on one screen</h2>
+</div>
+
+<section class="wrap" style="padding-bottom:20px">
+  <div class="shot-frame">
+    <div class="chrome"><i></i><i></i><i></i><i class="url" style="width:auto;height:auto;border-radius:0;background:none">localhost:8090/dashboard</i></div>
+    <img src="/assets/screenshots/overview.png" width="2880" height="1800" loading="lazy" decoding="async" alt="NautGate Overview — provider status cards, intelligence metrics and request charts">
+  </div>
+  <p class="caption">Overview — provider status, what the gateway learned from your traffic, and the subscription value it recovered.</p>
+</section>
+
+<section class="shot-grid">
+  <div>
+    <div class="shot-frame"><img src="/assets/screenshots/audit-log-thumb.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Audit Log"></div>
+    <span class="kicker">Audit log</span>
+    <p>Every call, with the model that actually answered and a flow view of the path it took.</p>
+  </div>
+  <div>
+    <div class="shot-frame"><img src="/assets/screenshots/insights-thumb.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Insights"></div>
+    <span class="kicker">Insights</span>
+    <p>Where context is wasted, which prompts drift, how much of a request is overhead.</p>
+  </div>
+  <div>
+    <div class="shot-frame"><img src="/assets/screenshots/cost-thumb.png" width="900" height="563" loading="lazy" decoding="async" alt="NautGate Cost"></div>
+    <span class="kicker">Cost</span>
+    <p>Spend by project, agent and provider — plus what your subscription covered.</p>
+  </div>
+</section>
+
+<section class="final">
+  <h2>Stop trusting. Start checking.</h2>
+  <p>Free and open source under AGPL. Runs on your machine, your server, or a box in your office that never touches the internet.</p>
+  <div class="buttons">
+    <a class="btn btn-primary" href="https://docs.nautgate.dev/docs">&gt;_ GET STARTED</a>
+    <a class="btn btn-ghost" href="https://github.com/48Nauts-Operator/NautGate">GITHUB</a>
+  </div>
+  <code>git clone https://github.com/48Nauts-Operator/NautGate.git &amp;&amp; cd NautGate &amp;&amp; just up</code>
+</section>
+
+<footer>
+  <div class="about">
+    <div class="row">
+      <svg width="24" height="24" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#808000"/>
+        <rect x="4.5" y="8.5" width="23" height="6.6" rx="1" fill="#0A0B00"/>
+        <rect x="7.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
+        <rect x="13.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
+        <rect x="19.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
+      </svg>
+      <span>NautGate</span>
+    </div>
+    <p>A memory-aware LLM gateway.<br>Built by 48Nauts in Switzerland.</p>
+  </div>
+  <nav>
+    <span class="label">Product</span>
+    <a href="#features">Features</a>
+    <a href="https://docs.nautgate.dev/docs">Docs</a>
+    <a href="/glossary.html">Glossary</a>
+    <a href="https://github.com/48Nauts-Operator/NautGate/releases">Changelog</a>
+  </nav>
+  <nav>
+    <span class="label">Source</span>
+    <a href="https://github.com/48Nauts-Operator/NautGate">GitHub</a>
+    <a href="https://github.com/48Nauts-Operator/NautGate/releases">Releases</a>
+    <a href="https://github.com/48Nauts-Operator/NautGate/blob/main/CONTRIBUTING.md">Contributing</a>
+    <a href="https://github.com/48Nauts-Operator/NautGate/blob/main/SECURITY.md">Security</a>
+  </nav>
+  <nav>
+    <span class="label">Legal</span>
+    <a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL-3.0</a>
+    <a href="mailto:hello@48nauts.com?subject=NautGate%20commercial%20licence">Commercial licence</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </nav>
+</footer>
+
+<script src="/js/main.js?v=1"></script>
+</body>
+</html>

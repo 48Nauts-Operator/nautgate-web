@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/style.css?v=4">
+<link rel="stylesheet" href="/css/style.css?v=5">
 
 <script type="application/ld+json">
 {
@@ -226,7 +226,28 @@
 
 <div class="wrap section-head">
   <p class="eyebrow">[ 06 ] How it differs</p>
-  <h2>Routers route. This one remembers.</h2>
+  <h2>Not just a gateway. A gateway that remembers.</h2>
+</div>
+
+<div class="diff-cards">
+  <div class="diff-card">
+    <span class="tag">Attestation</span>
+    <h3>We record the model that actually served</h3>
+    <p>Read from the provider&rsquo;s own response and written to an audited log — not the model the caller asked for. It&rsquo;s what makes the cost, drift and compliance numbers trustworthy.</p>
+    <span class="none">No competitor does this.</span>
+  </div>
+  <div class="diff-card">
+    <span class="tag">Subscription saved</span>
+    <h3>What your flat-rate plan actually covered</h3>
+    <p>Everyone tracks raw per-call spend. Only NautGate shows the notional list price your Max/Plus subscription absorbed — the number that justifies the plan.</p>
+    <span class="none">No competitor does this.</span>
+  </div>
+  <div class="diff-card">
+    <span class="tag">Model override</span>
+    <h3>Drive Claude Code onto any model</h3>
+    <p>Pin a local or cheaper model to a key and point a tool that hardcodes its own model straight at it — transparently. The whole on-prem evaluation story.</p>
+    <span class="none">No competitor markets this.</span>
+  </div>
 </div>
 
 <div class="compare-scroll">
@@ -235,37 +256,61 @@
       <tr>
         <th>Capability</th>
         <th class="us">NautGate</th>
-        <th>CLI routers</th>
-        <th>Cloud gateways</th>
+        <th>LiteLLM</th>
+        <th>Portkey</th>
+        <th>OpenRouter</th>
+        <th>Langfuse</th>
+        <th>Datadog</th>
+        <th>MLflow</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>Route any client to any model</td>
-        <td class="v us">yes</td><td class="v">yes</td><td class="v">yes</td>
+        <td class="mk y us">&#9679;</td><td class="mk y">&#9679;</td><td class="mk y">&#9679;</td><td class="mk y">&#9679;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td>
       </tr>
       <tr>
-        <td>Served model read from the response</td>
-        <td class="v us">yes</td><td class="v no">no</td><td class="v no">varies</td>
+        <td>Self-host &amp; air-gapped</td>
+        <td class="mk y us">&#9679;</td><td class="mk y">&#9679;</td><td class="mk p">&#9680;</td><td class="mk n">&#9675;</td><td class="mk y">&#9679;</td><td class="mk n">&#9675;</td><td class="mk y">&#9679;</td>
       </tr>
       <tr>
-        <td>Prompt + response capture, PII-classified</td>
-        <td class="v us">yes</td><td class="v no">no</td><td class="v">yes</td>
+        <td>Open source</td>
+        <td class="mk y us">&#9679;</td><td class="mk y">&#9679;</td><td class="mk y">&#9679;</td><td class="mk n">&#9675;</td><td class="mk y">&#9679;</td><td class="mk n">&#9675;</td><td class="mk y">&#9679;</td>
+      </tr>
+      <tr class="own">
+        <td>Attestation &mdash; served model verified</td>
+        <td class="mk y us">&#9679;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td>
       </tr>
       <tr>
-        <td>Runs with zero outbound calls</td>
-        <td class="v us">yes</td><td class="v">yes</td><td class="v no">no</td>
+        <td>Prompt + response capture, PII-gated</td>
+        <td class="mk y us">&#9679;</td><td class="mk p">&#9680;</td><td class="mk y">&#9679;</td><td class="mk p">&#9680;</td><td class="mk p">&#9680;</td><td class="mk y">&#9679;</td><td class="mk p">&#9680;</td>
+      </tr>
+      <tr class="own">
+        <td>Subscription-saved cost</td>
+        <td class="mk y us">&#9679;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td>
       </tr>
       <tr>
-        <td>Your data stays on your infrastructure</td>
-        <td class="v us">yes</td><td class="v">yes</td><td class="v no">no</td>
+        <td>Quality scoring on live traffic</td>
+        <td class="mk y us">&#9679;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td><td class="mk n">&#9675;</td><td class="mk y">&#9679;</td><td class="mk y">&#9679;</td><td class="mk y">&#9679;</td>
       </tr>
       <tr>
-        <td>Cost per seat</td>
-        <td class="v us">$0</td><td class="v">$0</td><td class="v no">metered</td>
+        <td>Head-to-head on real traffic</td>
+        <td class="mk y us">&#9679;</td><td class="mk n">&#9675;</td><td class="mk y">&#9679;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td>
+      </tr>
+      <tr>
+        <td>Drift detection</td>
+        <td class="mk y us">&#9679;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td><td class="mk y">&#9679;</td><td class="mk p">&#9680;</td>
+      </tr>
+      <tr class="own">
+        <td>Model override &mdash; hardcoded client</td>
+        <td class="mk y us">&#9679;</td><td class="mk p">&#9680;</td><td class="mk p">&#9680;</td><td class="mk p">&#9680;</td><td class="mk n">&#9675;</td><td class="mk n">&#9675;</td><td class="mk p">&#9680;</td>
       </tr>
     </tbody>
   </table>
+</div>
+<div class="compare-legend">
+  <span><b>&#9679;</b> yes</span><span><b>&#9680;</b> partial</span><span><b>&#9675;</b> no</span>
+  <span>Assessed against each vendor&rsquo;s docs, Jul 2026. Highlighted rows: no competitor does them.</span>
 </div>
 
 <section class="faq">
@@ -375,6 +420,6 @@
   <img id="lightbox-img" src="" alt="">
 </dialog>
 
-<script src="/js/main.js?v=4"></script>
+<script src="/js/main.js?v=5"></script>
 </body>
 </html>

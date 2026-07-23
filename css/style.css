@@ -419,6 +419,24 @@ table.compare td.v { font-family: var(--mono); font-size: 13px; }
 table.compare td.v.us { color: var(--brand-lift); }
 table.compare td.v.no { color: var(--faint); }
 
+/* differentiator cards + the named-competitor matrix */
+.diff-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 0 var(--pad) 34px; }
+@media (max-width: 720px) { .diff-cards { grid-template-columns: 1fr; } }
+.diff-card { border: 1px solid var(--line); border-radius: 12px; padding: 22px 20px; background: var(--surface); position: relative; overflow: hidden; }
+.diff-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--brand); }
+.diff-card .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--brand-lift); }
+.diff-card h3 { font-family: var(--display); font-size: 17px; line-height: 1.2; margin: 10px 0 8px; color: var(--paper); }
+.diff-card p { font-size: 13.5px; color: var(--body); margin: 0; line-height: 1.55; }
+.diff-card .none { display: block; margin-top: 13px; font-family: var(--mono); font-size: 12px; color: var(--brand-lift); }
+table.compare td.mk { font-family: var(--mono); font-size: 15px; text-align: center; }
+table.compare .mk.y { color: var(--brand-lift); }
+table.compare .mk.p { color: var(--body); }
+table.compare .mk.n { color: var(--faint); }
+table.compare td.us, table.compare th.us { background: rgba(128, 128, 0, 0.10); }
+table.compare tr.own td:first-child { color: var(--brand-lift); }
+.compare-legend { margin: -22px var(--pad) 40px; font-family: var(--mono); font-size: 12px; color: var(--faint); display: flex; flex-wrap: wrap; gap: 16px; }
+.compare-legend b { color: var(--brand-lift); font-weight: 400; }
+
 /* ─── FAQ ─────────────────────────────────────────────────────── */
 
 .faq { padding: 36px var(--pad) 56px; border-top: 1px solid var(--line); }

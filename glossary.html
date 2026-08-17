@@ -3,61 +3,46 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Glossary — NautGate</title>
+<title>LLM Gateway Glossary — NautGate</title>
 <meta name="description" content="Gateway, routing and evidence terms as NautGate means them — attested model, silent substitution, DECIDE ladder, carrying cost, zero egress and more. Each one maps to something the code actually does.">
+<meta name="theme-color" content="#07110f">
 <link rel="canonical" href="https://nautgate.dev/glossary.html">
+<link rel="alternate" type="application/rss+xml" title="NautGate engineering notes" href="https://nautgate.dev/feed.xml">
 
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="NautGate">
 <meta property="og:url" content="https://nautgate.dev/glossary.html">
 <meta property="og:title" content="Glossary — NautGate">
 <meta property="og:description" content="Gateway, routing and evidence terms as NautGate means them, not as the industry loosely uses them.">
-<meta property="og:image" content="https://nautgate.dev/assets/og.png">
+<meta property="og:image" content="https://nautgate.dev/assets/og-v2.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NautGate LLM gateway glossary">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Glossary — NautGate">
 <meta name="twitter:description" content="Gateway, routing and evidence terms as NautGate means them, not as the industry loosely uses them.">
-<meta name="twitter:image" content="https://nautgate.dev/assets/og.png">
+<meta name="twitter:image" content="https://nautgate.dev/assets/og-v2.png">
+<meta name="twitter:image:alt" content="NautGate LLM gateway glossary">
 
 <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/style.css?v=5">
+<link rel="stylesheet" href="/css/style.css?v=6">
 
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"DefinedTermSet","@id":"https://nautgate.dev/glossary.html#term-set","name":"NautGate LLM Gateway Glossary","description":"Definitions for model attestation, routing, cost evidence and local LLM operations as used by NautGate.","url":"https://nautgate.dev/glossary.html","inLanguage":"en","isPartOf":{"@id":"https://nautgate.dev/#website"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nautgate.dev/"},{"@type":"ListItem","position":2,"name":"Glossary","item":"https://nautgate.dev/glossary.html"}]}]}</script>
 <script defer src="https://wave.21nauts.com/script.js" data-website-id="57597b5e-75ea-4dbb-b503-610be0e39f1c"></script>
 </head>
 <body>
 
-<header class="nav">
-  <a class="nav-brand" href="/">
-    <svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect width="32" height="32" rx="7" fill="#808000"/>
-      <rect x="4.5" y="8.5" width="23" height="6.6" rx="1" fill="#0A0B00"/>
-      <rect x="7.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
-      <rect x="13.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
-      <rect x="19.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/>
-    </svg>
-    <span>NautGate</span>
-  </a>
-  <a class="nav-link" href="/#features">Features</a>
-  <a class="nav-link" href="https://docs.nautgate.dev">Docs</a>
-  <a class="nav-link" href="/glossary.html" aria-current="page">Glossary</a>
-  <a class="nav-link" href="https://github.com/48Nauts-Operator/NautGate">GitHub</a>
-  <div class="nav-spacer"></div>
-  <a class="version-pill" id="version-pill" href="https://github.com/48Nauts-Operator/NautGate/releases">—</a>
-  <a class="btn btn-primary" href="https://docs.nautgate.dev">&gt;_ GET STARTED</a>
-  <details class="nav-menu">
-    <summary aria-label="Menu"><i></i><i></i><i></i></summary>
-    <nav>
-      <a href="/#features">Features</a>
-      <a href="https://docs.nautgate.dev">Docs</a>
-      <a href="/glossary.html" aria-current="page">Glossary</a>
-      <a href="https://github.com/48Nauts-Operator/NautGate">GitHub</a>
-      <a href="https://github.com/48Nauts-Operator/NautGate/releases">Releases</a>
-    </nav>
-  </details>
-</header>
+<nav class="site-nav" aria-label="Primary navigation">
+  <a class="site-logo" href="/"><img src="/assets/icon.svg" width="28" height="28" alt=""><span>NautGate</span></a>
+  <div class="site-links"><a href="/#features">Features</a><a href="/#evidence">Evidence</a><a href="/#dashboard">Dashboard</a><a href="/#faq">FAQ</a><a href="https://docs.nautgate.dev">Docs</a><a href="/glossary.html" aria-current="page">Glossary</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a></div>
+  <div class="site-actions"><a class="github-link" href="https://github.com/48Nauts-Operator/NautGate">GitHub</a><a class="btn btn-primary btn-sm" href="https://docs.nautgate.dev">Get started</a><details class="site-menu"><summary aria-label="Open navigation"><i></i><i></i><i></i></summary><div><a href="/">Home</a><a href="https://docs.nautgate.dev">Docs</a><a href="/glossary.html">Glossary</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a><a href="https://github.com/48Nauts-Operator/NautGate">GitHub</a></div></details></div>
+</nav>
 
 <div class="glossary-head">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Glossary</span></nav>
   <p class="eyebrow">Glossary</p>
   <h1>The words this thing uses</h1>
   <p>Gateway, routing and evidence terms as NautGate means them — not as the industry loosely uses them. Each one maps to something the code actually does.</p>
@@ -243,6 +228,6 @@
   <div class="related" id="tb-related"></div>
 </dialog>
 
-<script src="/js/main.js?v=5"></script>
+<script src="/js/main.js?v=6"></script>
 </body>
 </html>

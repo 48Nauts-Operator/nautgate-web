@@ -2,7 +2,18 @@
 // horizontal scroll, no JS errors, and that the interactive bits work.
 import { chromium } from "/Users/cand0rian/.claude/skills/feature-demo/node_modules/playwright/index.mjs";
 const BASE = process.argv[2] || "http://localhost:4321";
-const PAGES = ["/", "/glossary.html", "/privacy.html", "/terms.html"];
+const PAGES = [
+  "/",
+  "/glossary.html",
+  "/releases.html",
+  "/blog/",
+  "/blog/why-i-built-nautgate.html",
+  "/blog/tailscale-first-network-wide-nautgate.html",
+  "/blog/prove-which-model-answered.html",
+  "/blog/offline-means-no-egress.html",
+  "/privacy.html",
+  "/terms.html",
+];
 const WIDTHS = [390, 768, 1024, 1440];
 let fail = 0;
 const b = await chromium.launch();
@@ -14,7 +25,7 @@ for (const page of PAGES) {
     p.on("pageerror", (e) => errs.push(e.message));
     await p.goto(BASE + page, { waitUntil: "networkidle" });
     await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await p.waitForTimeout(800);
+    await p.waitForTimeout(120);
     const r = await p.evaluate(() => ({
       sw: document.documentElement.scrollWidth,
       cw: document.documentElement.clientWidth,
@@ -32,7 +43,7 @@ const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
 await p.goto(BASE + "/", { waitUntil: "networkidle" });
 await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
 await p.waitForTimeout(1000);
-await p.click(".shot-grid img");
+await p.click(".gallery-open");
 await p.waitForTimeout(400);
 const opened = await p.evaluate(() => document.getElementById("lightbox").open);
 await p.keyboard.press("Escape");
@@ -54,13 +65,13 @@ if (!ok) fail++;
 // mobile menu at a phone width
 const mob = await b.newPage({ viewport: { width: 390, height: 844 } });
 await mob.goto(BASE + "/", { waitUntil: "networkidle" });
-const burgerShown = await mob.isVisible(".nav-menu > summary");
-await mob.click(".nav-menu > summary");
+const burgerShown = await mob.isVisible(".site-menu > summary");
+await mob.click(".site-menu > summary");
 await mob.waitForTimeout(250);
-const menuOpen = await mob.isVisible(".nav-menu > nav");
-await mob.click(".nav-menu > nav a[href='#features']");
+const menuOpen = await mob.isVisible(".site-menu > div");
+await mob.click(".site-menu > div a[href='#features']");
 await mob.waitForTimeout(300);
-const menuClosed = !(await mob.evaluate(() => document.querySelector(".nav-menu").open));
+const menuClosed = !(await mob.evaluate(() => document.querySelector(".site-menu").open));
 const mobOk = burgerShown && menuOpen && menuClosed;
 console.log(`mobile menu          ${mobOk ? "\u2713" : "\u2717"}`);
 if (!mobOk) fail++;

@@ -51,4 +51,8 @@ serve:
     python3 -m http.server 4321
 
 check:
+    node scripts/check-seo.mjs
     node scripts/check.mjs http://localhost:4321
+
+check-seo:
+    node scripts/check-seo.mjs

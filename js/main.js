@@ -1,4 +1,4 @@
-// Two small behaviours; everything else is HTML and CSS on purpose.
+// Small progressive enhancements; the site remains complete without JavaScript.
 
 // 1. Version pill — resolved client-side so a release needs no site deploy.
 const pill = document.getElementById("version-pill");
@@ -8,6 +8,44 @@ if (pill) {
     .then((rel) => { if (rel.tag_name) pill.textContent = rel.tag_name; else pill.remove(); })
     .catch(() => pill.remove());   // no release yet, or rate-limited — say nothing rather than lie
 }
+
+// Homepage/editorial release data. Downloads are release-asset downloads as
+// reported by GitHub. NautGate also ships through Homebrew and GHCR; neither
+// exposes a compatible public counter, so they are intentionally not guessed.
+(async () => {
+  const statNodes = document.querySelectorAll("[data-gh-downloads], [data-gh-releases]");
+  const versionNodes = document.querySelectorAll("[data-version]");
+  if (!statNodes.length && !versionNodes.length) return;
+
+  try {
+    const response = await fetch("https://api.github.com/repos/48Nauts-Operator/NautGate/releases?per_page=100");
+    if (!response.ok) return;
+    const releases = await response.json();
+    if (!Array.isArray(releases) || !releases.length) return;
+
+    const downloads = releases.reduce((total, release) =>
+      total + (release.assets || []).reduce((sum, asset) => sum + (asset.download_count || 0), 0), 0);
+    const format = (value) => value.toLocaleString("en-US");
+
+    document.querySelectorAll("[data-gh-downloads]").forEach((node) => { node.textContent = format(downloads); });
+    document.querySelectorAll("[data-gh-releases]").forEach((node) => { node.textContent = format(releases.length); });
+    document.querySelectorAll("[data-version]").forEach((node) => { node.textContent = releases[0].tag_name; });
+  } catch {
+    // The current verified values remain visible if GitHub is unavailable.
+  }
+})();
+
+// Copy-ready Homebrew command.
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-copy]");
+  if (!button) return;
+  navigator.clipboard.writeText(button.dataset.copy).then(() => {
+    const previous = button.textContent;
+    button.textContent = "copied";
+    button.classList.add("ok");
+    setTimeout(() => { button.textContent = previous; button.classList.remove("ok"); }, 1200);
+  }).catch(() => {});
+});
 
 // 2. Mobile menu: <details> handles open/close, but an in-page anchor doesn't
 //    navigate, so the panel would stay open over the section you jumped to.
@@ -24,6 +62,19 @@ if (menu) {
   });
 }
 
+const siteMenu = document.querySelector(".site-menu");
+if (siteMenu) {
+  siteMenu.addEventListener("click", (event) => {
+    if (event.target.closest("a")) siteMenu.open = false;
+  });
+  document.addEventListener("click", (event) => {
+    if (siteMenu.open && !siteMenu.contains(event.target)) siteMenu.open = false;
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") siteMenu.open = false;
+  });
+}
+
 // 3. Screenshot lightbox. <dialog> gives us Escape, focus trap and the
 //    backdrop for free — the only JS here is swapping the src.
 const box = document.getElementById("lightbox");
@@ -31,13 +82,21 @@ if (box) {
   const full = document.getElementById("lightbox-img");
   const label = document.getElementById("lightbox-label");
 
-  document.querySelectorAll(".shot-frame img").forEach((thumb) => {
-    thumb.addEventListener("click", () => {
+  document.querySelectorAll(".shot-frame img, .gallery-open img").forEach((thumb) => {
+    thumb.closest("button")?.addEventListener("click", () => {
       full.src = thumb.dataset.full || thumb.src;
       full.alt = thumb.alt;
       label.textContent = thumb.alt;
       box.showModal();
     });
+    if (!thumb.closest("button")) {
+      thumb.addEventListener("click", () => {
+        full.src = thumb.dataset.full || thumb.src;
+        full.alt = thumb.alt;
+        label.textContent = thumb.alt;
+        box.showModal();
+      });
+    }
   });
 
   // Click the image, the ✕, or the backdrop (target is the dialog itself).

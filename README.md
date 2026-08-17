@@ -11,18 +11,36 @@ repo *is* the site, and GitHub Pages uploads it as-is.
 ```
 index.html      landing
 glossary.html   the terms, with a client-side category filter
+releases.html   release notes and live GitHub adoption numbers
+blog/           Markdown sources plus generated article pages
 privacy.html    cookieless-analytics disclosure  (noindex)
 terms.html      AGPL summary + commercial licence (noindex)
 css/style.css   the whole stylesheet
-js/main.js      version pill + glossary filter
+js/main.js      release stats, menus, lightbox, copy + glossary filter
 fonts/          self-hosted latin subsets (Space Grotesk, Inter, JetBrains Mono)
 assets/         brand marks, OG image, dashboard screenshots
+feed.xml        RSS feed for engineering notes
+sitemap.xml     canonical indexable URLs and honest modification dates
+```
+
+Blog articles are authored in Markdown and rendered with the checked-in Pandoc
+template. For example:
+
+```bash
+pandoc blog/tailscale-first-network-wide-nautgate.md \
+  --wrap=none \
+  --template=scripts/blog-template.html \
+  --lua-filter=scripts/pandoc-drop-title.lua \
+  -V canonical=https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html \
+  -V displaydate='17 August 2026' \
+  -o blog/tailscale-first-network-wide-nautgate.html
 ```
 
 ## Develop
 
 ```bash
 just serve      # python -m http.server 4321
+just check-seo  # metadata, canonicals, JSON-LD, sitemap, feed and share card
 ```
 
 Bump the `?v=N` on the CSS/JS `<link>`/`<script>` tags whenever you change them —

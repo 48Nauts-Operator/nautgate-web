@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tailscale first: the best way to run NautGate for your whole network · NautGate Blog</title>
+  <meta name="description" content="Put one NautGate server behind Tailscale Serve, keep port 8090 off the public internet, and give every approved device a private HTTPS gateway.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html">
+  <link rel="alternate" type="application/rss+xml" title="NautGate engineering notes" href="https://nautgate.dev/feed.xml">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="NautGate"><meta property="og:title" content="Tailscale first: the best way to run NautGate for your whole network"><meta property="og:description" content="Put one NautGate server behind Tailscale Serve, keep port 8090 off the public internet, and give every approved device a private HTTPS gateway."><meta property="og:url" content="https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html"><meta property="og:image" content="https://nautgate.dev/assets/og-v2.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Tailscale first: the best way to run NautGate for your whole network — NautGate"><meta property="article:published_time" content="2026-08-17"><meta property="article:modified_time" content="2026-08-17"><meta property="article:author" content="André"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Tailscale first: the best way to run NautGate for your whole network"><meta name="twitter:description" content="Put one NautGate server behind Tailscale Serve, keep port 8090 off the public internet, and give every approved device a private HTTPS gateway."><meta name="twitter:image" content="https://nautgate.dev/assets/og-v2.png"><meta name="twitter:image:alt" content="Tailscale first: the best way to run NautGate for your whole network — NautGate">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="/css/style.css?v=6">
+  <script defer src="https://wave.21nauts.com/script.js" data-website-id="57597b5e-75ea-4dbb-b503-610be0e39f1c"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html#article","headline":"Tailscale first: the best way to run NautGate for your whole network","description":"Put one NautGate server behind Tailscale Serve, keep port 8090 off the public internet, and give every approved device a private HTTPS gateway.","datePublished":"2026-08-17","dateModified":"2026-08-17","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html"},"image":{"@type":"ImageObject","url":"https://nautgate.dev/assets/og-v2.png","width":1200,"height":630},"author":{"@type":"Person","name":"André"},"publisher":{"@type":"Organization","@id":"https://nautgate.dev/#organization","name":"48Nauts","logo":{"@type":"ImageObject","url":"https://nautgate.dev/assets/icon-512.png"}}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nautgate.dev/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://nautgate.dev/blog/"},{"@type":"ListItem","position":3,"name":"Tailscale first: the best way to run NautGate for your whole network","item":"https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html"}]}]}</script>
+</head>
+<body class="editorial-page">
+<nav class="site-nav" aria-label="Primary navigation"><a class="site-logo" href="/"><img src="/assets/icon.svg" width="28" height="28" alt=""><span>NautGate</span></a><div class="site-links"><a href="/#features">Features</a><a href="/#evidence">Evidence</a><a href="/#dashboard">Dashboard</a><a href="/#faq">FAQ</a><a href="https://docs.nautgate.dev">Docs</a><a href="/glossary.html">Glossary</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a></div><div class="site-actions"><a class="github-link" href="https://github.com/48Nauts-Operator/NautGate">GitHub</a><a class="btn btn-primary btn-sm" href="https://docs.nautgate.dev">Get started</a><details class="site-menu"><summary aria-label="Open navigation"><i></i><i></i><i></i></summary><div><a href="/">Home</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a><a href="https://docs.nautgate.dev">Docs</a><a href="https://github.com/48Nauts-Operator/NautGate">GitHub</a></div></details></div></nav>
+<main class="editorial-wrap">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span aria-current="page">Tailscale first: the best way to run NautGate for your whole network</span></nav>
+  <header class="article-head"><p class="editorial-kicker">Deployment guide</p><h1>Tailscale first: the best way to run NautGate for your whole network</h1><p class="editorial-lede">Put one NautGate server behind Tailscale Serve, keep port 8090 off the public internet, and give every approved device a private HTTPS gateway.</p><div class="meta"><time datetime="2026-08-17">17 August 2026</time><span>·</span><span>By André</span></div></header>
+  <article class="article-body">
+<p>Running NautGate on a laptop is useful. Running one shared NautGate instance for every workstation, coding agent, and home-lab machine is where it becomes an infrastructure layer: one place for provider credentials, routing policy, audit history, model evidence, and cost.</p>
+<p>The wrong way to get there is to publish port <code>8090</code> on the internet.</p>
+<p>The better pattern is <strong>Tailscale first, NautGate second</strong>:</p>
+<pre class="text"><code>Claude Code ─┐
+Codex ───────┤   encrypted tailnet       localhost only
+Pi ──────────┼──► https://nautgate.… ───► 127.0.0.1:8090
+your apps ───┘       Tailscale Serve          NautGate
+                                                │
+                                                ├── NautRouter
+                                                └── Postgres</code></pre>
+<p>NautGate stays on the server’s loopback interface. Tailscale Serve provides the private HTTPS endpoint and makes it reachable only inside your tailnet. There is no router port-forward, no public firewall rule, and no public reverse proxy.</p>
+<p>This guide uses Ubuntu 24.04 and NautGate v0.2.0, but the layout works on any Linux distribution with Docker Compose v2 and Tailscale.</p>
+<h2 id="what-you-are-building">What you are building</h2>
+<p>At the end, you will have:</p>
+<ul>
+<li>one Linux server named <code>nautgate</code> in your tailnet;</li>
+<li>NautGate, NautRouter, and Postgres running in Docker;</li>
+<li>NautGate listening only on <code>127.0.0.1:8090</code>;</li>
+<li>a private <code>https://nautgate.&lt;tailnet&gt;.ts.net</code> URL from Tailscale Serve;</li>
+<li>one NautGate API key per person, device, or agent;</li>
+<li>one shared audit and analytics surface for the whole tailnet.</li>
+</ul>
+<p>Every client that should use the gateway joins Tailscale. Devices outside the tailnet cannot reach it—even if they know the hostname.</p>
+<h2 id="before-you-begin">Before you begin</h2>
+<p>You need:</p>
+<ul>
+<li>an Ubuntu or other Linux server with outbound internet access;</li>
+<li>a Tailscale account and permission to edit the tailnet policy;</li>
+<li><code>sudo</code> access on the server;</li>
+<li>at least one model-provider credential, unless you only want to inspect the dashboard first.</li>
+</ul>
+<p>You do <strong>not</strong> need a public domain, TLS certificate, inbound firewall rule, or public IP address.</p>
+<h2 id="give-the-server-a-tailscale-identity">1. Give the server a Tailscale identity</h2>
+<p>Tailscale recommends tags for non-human machines such as servers. Start in the <strong>Access controls</strong> page of the Tailscale admin console and define a tag for NautGate.</p>
+<p>The following policy lets every member of the tailnet reach HTTPS on a device tagged <code>tag:nautgate</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;tagOwners&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;tag:nautgate&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;autogroup:admin&quot;</span><span class="ot">]</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;grants&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;src&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;autogroup:member&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;dst&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;tag:nautgate&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;ip&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;tcp:443&quot;</span><span class="ot">]</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>If NautGate is for a team rather than everyone in the tailnet, replace <code>autogroup:member</code> with a group such as <code>group:engineering</code>.</p>
+<p>Tailscale grants are additive. A broad existing allow rule can still grant more access than this narrow rule, so review the complete policy rather than assuming the most specific entry wins.</p>
+<p>Now install Tailscale on the server:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://tailscale.com/install.sh <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tailscale up <span class="at">--hostname</span><span class="op">=</span>nautgate <span class="at">--advertise-tags</span><span class="op">=</span>tag:nautgate</span></code></pre></div>
+<p>Open the authentication URL printed by <code>tailscale up</code>, then confirm the server appears in the Tailscale <strong>Machines</strong> page with the <code>tag:nautgate</code> tag.</p>
+<p>For unattended provisioning, use a tagged, pre-approved auth key instead of an interactive login. Treat that key like a password: inject it from your secret manager, do not commit it, and unset it after enrollment.</p>
+<p>Verify the connection:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tailscale</span> status</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tailscale</span> ip <span class="at">-4</span></span></code></pre></div>
+<p>Do this before installing NautGate. If the server cannot join the tailnet, you want to solve that while there is only one moving part.</p>
+<h2 id="install-docker-compose">2. Install Docker Compose</h2>
+<p>On Ubuntu 24.04, the distribution packages are sufficient:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get update</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt-get install <span class="at">-y</span> docker.io docker-compose-v2 openssl</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable <span class="at">--now</span> docker</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker version</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose version</span></code></pre></div>
+<p>For another distribution—or if you want Docker’s newest engine—follow Docker’s official installation instructions. The important requirement is Compose v2, invoked as <code>docker compose</code>, not the retired <code>docker-compose</code> binary.</p>
+<h2 id="download-nautgate-and-create-its-secrets">3. Download NautGate and create its secrets</h2>
+<p>Create a dedicated directory:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> install <span class="at">-d</span> <span class="at">-m</span> 0750 <span class="at">-o</span> <span class="st">&quot;</span><span class="va">$USER</span><span class="st">&quot;</span> <span class="at">-g</span> <span class="st">&quot;</span><span class="va">$(</span><span class="fu">id</span> <span class="at">-gn</span><span class="va">)</span><span class="st">&quot;</span> /opt/nautgate</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/nautgate</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://nautgate.dev/compose.yml <span class="at">-o</span> docker-compose.yml</span></code></pre></div>
+<p>For a shared service, pin the three NautGate images to the release you tested. The published Compose file tracks <code>latest</code>; this command pins the current guide to v0.2.0 while leaving <code>postgres:16</code> unchanged:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="at">-i</span> <span class="st">&#39;s/:latest/:v0.2.0/g&#39;</span> docker-compose.yml</span></code></pre></div>
+<p>Create a private <code>.env</code> with a database password and a stable master key. The master key protects provider credentials saved through the dashboard. Back it up: losing it means re-entering those provider keys.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">umask</span> 077</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> .env <span class="op">&lt;&lt;EOF</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">POSTGRES_PASSWORD=</span><span class="va">$(</span><span class="ex">openssl</span> rand <span class="at">-hex</span> 32<span class="va">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">NAUTGATE_MASTER_KEY=</span><span class="va">$(</span><span class="ex">openssl</span> rand <span class="at">-hex</span> 32<span class="va">)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 600 .env</span></code></pre></div>
+<p>You can also place <code>OPENROUTER_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, <code>OPENAI_API_KEY</code>, or <code>GEMINI_API_KEY</code> in this file. We prefer adding provider keys later through <strong>Settings → Providers</strong>, where NautGate encrypts them at rest, and keeping <code>.env</code> limited to infrastructure secrets.</p>
+<h2 id="start-nautgatebut-keep-it-local">4. Start NautGate—but keep it local</h2>
+<p>Launch the stack:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose up <span class="at">-d</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose ps</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsS</span> http://127.0.0.1:8090/health</span></code></pre></div>
+<p>The health response should include:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span><span class="dt">&quot;status&quot;</span><span class="fu">:</span><span class="st">&quot;ok&quot;</span><span class="fu">,</span><span class="dt">&quot;version&quot;</span><span class="fu">:</span><span class="st">&quot;0.2.0&quot;</span><span class="fu">}</span></span></code></pre></div>
+<p>The published Compose file deliberately maps NautGate as <code>127.0.0.1:8090:8090</code>. Leave it that way. Do not replace it with <code>0.0.0.0:8090:8090</code>, do not run <code>ufw allow 8090</code>, and do not forward port 8090 on your router.</p>
+<p>On first boot, NautGate creates one gateway API key. Capture it now:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose logs nautgate <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-oE</span> <span class="st">&#39;ng_[a-f0-9]{32}_[A-Za-z0-9_-]+&#39;</span> <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span> <span class="fu">head</span> <span class="at">-1</span></span></code></pre></div>
+<p>Store it in your password manager. It is printed only when the database has no keys yet; recreating the container later does not mint another one.</p>
+<h2 id="publish-localhost-privately-with-tailscale-serve">5. Publish localhost privately with Tailscale Serve</h2>
+<p>Tailscale Serve can terminate HTTPS for the server’s MagicDNS name and reverse proxy requests to NautGate on loopback:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tailscale serve <span class="at">--bg</span> <span class="at">--https</span><span class="op">=</span>443 http://127.0.0.1:8090</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tailscale serve status</span></code></pre></div>
+<p>If your tailnet has not enabled HTTPS certificates yet, Tailscale will print the admin action required to enable them. The status output then shows the exact URL, similar to:</p>
+<pre class="text"><code>https://nautgate.example-tailnet.ts.net
+|-- / proxy http://127.0.0.1:8090</code></pre>
+<p>Use the URL Tailscale prints; do not copy the example hostname.</p>
+<p>This is <strong>Tailscale Serve</strong>, not Tailscale Funnel. Serve stays inside the tailnet. Funnel deliberately publishes a service to the internet and is the wrong tool for this deployment.</p>
+<h2 id="activate-the-dashboard-and-add-providers">6. Activate the dashboard and add providers</h2>
+<p>From a second device already connected to the tailnet, open:</p>
+<pre class="text"><code>https://nautgate.&lt;your-tailnet&gt;.ts.net/dashboard</code></pre>
+<p>Because this is a remote browser, NautGate intentionally does not inject a local admin token into the page. Paste the first-run <code>ng_…</code> key you saved to activate the dashboard.</p>
+<p>Then:</p>
+<ol type="1">
+<li>Open <strong>Settings → Providers</strong> and add the providers the network will use.</li>
+<li>Open <strong>Settings → Keys</strong> and create a separate NautGate key for each user, machine, project, or agent.</li>
+<li>Give clients only their own <code>ng_…</code> key—not the provider credential and not the first-run admin key.</li>
+</ol>
+<p>Separate keys make the audit log useful. A single shared token can tell you that the network called a model; per-client keys tell you who or what made the call. They also let you revoke one compromised client without interrupting everyone.</p>
+<h2 id="point-the-network-at-nautgate">7. Point the network at NautGate</h2>
+<p>Copy the HTTPS base URL from <code>tailscale serve status</code>.</p>
+<p>For OpenAI-compatible clients:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_BASE_URL</span><span class="op">=</span>https://nautgate.<span class="op">&lt;</span>your-tailnet<span class="op">&gt;</span>.ts.net/v1</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_API_KEY</span><span class="op">=</span>ng_your_client_key</span></code></pre></div>
+<p>For Claude Code:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_BASE_URL</span><span class="op">=</span>https://nautgate.<span class="op">&lt;</span>your-tailnet<span class="op">&gt;</span>.ts.net</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">ANTHROPIC_API_KEY</span><span class="op">=</span>ng_your_client_key</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">claude</span> <span class="at">--bare</span></span></code></pre></div>
+<p><code>--bare</code> matters when Claude Code already has a stored OAuth login; otherwise that login can take precedence over the endpoint and key you just supplied.</p>
+<p>Use the same pattern for applications and scripts: the Tailscale Serve URL is the base URL, and a client-specific <code>ng_…</code> token is the API key. Provider keys remain on the server.</p>
+<h2 id="prove-it-from-another-device">8. Prove it from another device</h2>
+<p>From a tailnet client—not from the NautGate server—run:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsS</span> https://nautgate.<span class="op">&lt;</span>your-tailnet<span class="op">&gt;</span>.ts.net/health</span></code></pre></div>
+<p>Then make one real model call from a configured client and confirm that the dashboard records:</p>
+<ul>
+<li>the client or agent identity;</li>
+<li>the requested and actually served model;</li>
+<li>the provider response, latency, tokens, and cost;</li>
+<li>the route decision that led there.</li>
+</ul>
+<p>Finally, disconnect that client from Tailscale and retry the health URL. It should no longer be reachable. That negative test is the proof that NautGate is private, not merely obscure.</p>
+<h2 id="operating-the-shared-gateway">Operating the shared gateway</h2>
+<h3 id="check-it">Check it</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/nautgate</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose ps</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose logs <span class="at">--tail</span><span class="op">=</span>100 nautgate</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tailscale serve status</span></code></pre></div>
+<p>From another tailnet device:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tailscale</span> ping nautgate</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsS</span> https://nautgate.<span class="op">&lt;</span>your-tailnet<span class="op">&gt;</span>.ts.net/ready</span></code></pre></div>
+<p><code>/health</code> proves the process is alive. <code>/ready</code> also checks whether the database is reachable.</p>
+<h3 id="update-it-deliberately">Update it deliberately</h3>
+<p>For a shared gateway, read the release notes, change the three NautGate image tags in <code>docker-compose.yml</code>, and then run:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/nautgate</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose pull</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose up <span class="at">-d</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsS</span> http://127.0.0.1:8090/health</span></code></pre></div>
+<p>The Postgres data and NautGate backups live in Docker volumes and survive a normal recreate. Do not use <code>docker compose down -v</code> unless you intend to delete them.</p>
+<h3 id="stop-sharing-without-stopping-nautgate">Stop sharing without stopping NautGate</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tailscale serve off</span></code></pre></div>
+<p>That removes the tailnet-facing proxy while leaving the loopback service running. To stop the application too:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/nautgate</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> docker compose down</span></code></pre></div>
+<h2 id="what-about-devices-that-cannot-run-tailscale">What about devices that cannot run Tailscale?</h2>
+<p>The cleanest design is one Tailscale client per workstation or server. It gives each device an identity and lets grants decide who reaches NautGate.</p>
+<p>A Tailscale subnet router can bring legacy LAN devices into the picture, but it also widens the trust boundary: access becomes associated with a routed network rather than an individually authenticated device. Add one only when you have a real client that cannot run Tailscale, and give that subnet the narrowest grant possible. It is not required for the setup in this article.</p>
+<h2 id="the-security-checklist">The security checklist</h2>
+<p>Before calling the deployment finished, verify all of these:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Tailscale was installed and tested before NautGate.</label></li>
+<li><label><input type="checkbox" />The server has a non-human <code>tag:nautgate</code> identity.</label></li>
+<li><label><input type="checkbox" />Tailnet grants allow only the intended users to reach TCP 443.</label></li>
+<li><label><input type="checkbox" />Broad allow rules do not accidentally bypass the narrow grant.</label></li>
+<li><label><input type="checkbox" />Docker publishes NautGate only on <code>127.0.0.1:8090</code>.</label></li>
+<li><label><input type="checkbox" />No public firewall or router rule exposes port 8090.</label></li>
+<li><label><input type="checkbox" />Tailscale Serve—not Funnel—provides the HTTPS endpoint.</label></li>
+<li><label><input type="checkbox" /><code>.env</code> is mode 0600 and its master key is backed up securely.</label></li>
+<li><label><input type="checkbox" />Every user, device, or agent has a separate NautGate key.</label></li>
+<li><label><input type="checkbox" />Provider credentials stay on the server.</label></li>
+<li><label><input type="checkbox" />A second tailnet device can connect, and a non-tailnet device cannot.</label></li>
+</ul>
+<p>That is the whole pattern: <strong>identity and private networking first; gateway second</strong>. NautGate can then serve an entire team without becoming another public admin panel waiting to be found.</p>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://tailscale.com/docs/install/linux">Install Tailscale on Linux</a></li>
+<li><a href="https://tailscale.com/docs/servers">Set up servers with tags and auth keys</a></li>
+<li><a href="https://tailscale.com/docs/features/tailscale-serve">Tailscale Serve</a></li>
+<li><a href="https://tailscale.com/docs/reference/tailscale-cli/serve">Tailscale Serve command reference</a></li>
+<li><a href="https://tailscale.com/docs/features/access-control/grants">Tailscale grants</a></li>
+<li><a href="https://tailscale.com/docs/features/magicdns">MagicDNS</a></li>
+<li><a href="https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.2.0">NautGate v0.2.0</a></li>
+</ul>
+  </article>
+  <nav class="article-more" aria-label="More from NautGate"><a href="/blog/">All engineering notes</a><a href="/glossary.html">LLM gateway glossary</a><a href="/releases.html">NautGate releases</a></nav>
+</main>
+<footer class="site-footer"><div class="footer-brand"><a class="site-logo" href="/"><img src="/assets/icon.svg" width="26" height="26" alt=""><span>NautGate</span></a><p>A memory-aware LLM gateway.<br>Built by 48Nauts in Switzerland.</p></div><div class="footer-links"><a href="/">Home</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a><a href="https://docs.nautgate.dev">Docs</a><a href="https://github.com/48Nauts-Operator/NautGate">GitHub</a></div><p class="footer-fine">© 2026 48Nauts · AGPL-3.0-or-later</p></footer>
+<script src="/js/main.js?v=6"></script>
+</body>
+</html>

@@ -2,12 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nautgate.dev/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-08-17</lastmod>
   </url>
   <url>
     <loc>https://nautgate.dev/glossary.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://nautgate.dev/releases.html</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://nautgate.dev/blog/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://nautgate.dev/blog/why-i-built-nautgate.html</loc>
+    <lastmod>2026-08-16</lastmod>
+  </url>
+  <url>
+    <loc>https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://nautgate.dev/blog/prove-which-model-answered.html</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
+    <loc>https://nautgate.dev/blog/offline-means-no-egress.html</loc>
+    <lastmod>2026-08-17</lastmod>
   </url>
 </urlset>

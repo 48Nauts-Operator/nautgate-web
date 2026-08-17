@@ -9,13 +9,11 @@ if (pill) {
     .catch(() => pill.remove());   // no release yet, or rate-limited — say nothing rather than lie
 }
 
-// Homepage/editorial release data. Downloads are release-asset downloads as
-// reported by GitHub. NautGate also ships through Homebrew and GHCR; neither
-// exposes a compatible public counter, so they are intentionally not guessed.
+// Homepage/editorial release data from GitHub's public Releases API.
 (async () => {
-  const statNodes = document.querySelectorAll("[data-gh-downloads], [data-gh-releases]");
+  const releaseNodes = document.querySelectorAll("[data-gh-releases]");
   const versionNodes = document.querySelectorAll("[data-version]");
-  if (!statNodes.length && !versionNodes.length) return;
+  if (!releaseNodes.length && !versionNodes.length) return;
 
   try {
     const response = await fetch("https://api.github.com/repos/48Nauts-Operator/NautGate/releases?per_page=100");
@@ -23,11 +21,8 @@ if (pill) {
     const releases = await response.json();
     if (!Array.isArray(releases) || !releases.length) return;
 
-    const downloads = releases.reduce((total, release) =>
-      total + (release.assets || []).reduce((sum, asset) => sum + (asset.download_count || 0), 0), 0);
     const format = (value) => value.toLocaleString("en-US");
 
-    document.querySelectorAll("[data-gh-downloads]").forEach((node) => { node.textContent = format(downloads); });
     document.querySelectorAll("[data-gh-releases]").forEach((node) => { node.textContent = format(releases.length); });
     document.querySelectorAll("[data-version]").forEach((node) => { node.textContent = releases[0].tag_name; });
   } catch {

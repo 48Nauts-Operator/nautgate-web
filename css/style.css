@@ -1025,7 +1025,7 @@ dialog.termbox .related button strong {
 .accent { color: var(--brand-lift) !important; }
 .proof-card figcaption { padding-top: 15px; color: var(--ng-muted); font-size: 12px; line-height: 1.55; }
 
-.adoption { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--ng-panel-deep); border-top: 1px solid var(--ng-line); border-bottom: 1px solid var(--ng-line); }
+.adoption { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--ng-panel-deep); border-top: 1px solid var(--ng-line); border-bottom: 1px solid var(--ng-line); }
 .adoption-stat { min-height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; padding: 26px 20px; text-align: center; }
 .adoption-stat + .adoption-stat { border-left: 1px solid var(--ng-line); }
 .adoption-stat strong { font-family: var(--display); color: var(--ng-text); font-size: 38px; line-height: 1; letter-spacing: -.035em; }
@@ -1195,7 +1195,7 @@ dialog.termbox .related button strong {
 .article-more a { color: var(--ng-soft); text-decoration: none; }
 .article-more a:hover { color: var(--brand-lift); }
 
-.release-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 38px; }
+.release-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 38px; }
 .release-summary div { padding: 22px; background: var(--ng-panel); border: 1px solid var(--ng-line); border-radius: 10px; }
 .release-summary strong { display: block; color: var(--ng-text); font-family: var(--display); font-size: 28px; }
 .release-summary span { color: var(--ng-muted); font-size: 12px; }
@@ -1230,9 +1230,6 @@ dialog.termbox .related button strong {
   .ng-hero h1 { font-size: clamp(45px, 12vw, 68px); }
   .proof-card { margin-top: 42px; }
   .hero-product-shot { width: min(100%, calc(100vw - 36px)); margin-top: 42px; }
-  .adoption { grid-template-columns: repeat(2, 1fr); }
-  .adoption-stat:nth-child(3) { border-left: 0; border-top: 1px solid var(--ng-line); }
-  .adoption-stat:nth-child(4) { border-top: 1px solid var(--ng-line); }
   .ng-section { padding: 82px 28px; }
   .split-intro { align-items: flex-start; flex-direction: column; gap: 0; }
   .feature-grid, .ng-gallery, .difference-grid { grid-template-columns: 1fr; }
@@ -1255,6 +1252,8 @@ dialog.termbox .related button strong {
   .hero-product-shot { width: calc(100vw - 24px); }
   .proof-card dl div { grid-template-columns: 85px 1fr; gap: 12px; }
   .proof-card dd { font-size: 10.5px; }
+  .adoption { grid-template-columns: 1fr; }
+  .adoption-stat + .adoption-stat { border-left: 0; border-top: 1px solid var(--ng-line); }
   .adoption-stat { min-height: 125px; padding: 20px 10px; }
   .adoption-stat strong { font-size: 30px; }
   .adoption-stat span { font-size: 11px; }

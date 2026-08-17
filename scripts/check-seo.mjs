@@ -94,5 +94,11 @@ positions.every((position, i) => position >= 0 && (!i || position > positions[i 
   ? pass("blog is reverse chronological with founder post at the bottom")
   : fail("blog article order");
 
+const homepage = await readFile("index.html", "utf8");
+const releasesPage = await readFile("releases.html", "utf8");
+!homepage.includes("data-gh-downloads") && !releasesPage.includes("data-gh-downloads")
+  ? pass("unsupported download counter remains hidden")
+  : fail("unsupported download counter is visible");
+
 console.log(failed ? `\n${failed} SEO CHECK(S) FAILED` : "\nall SEO checks passed");
 process.exit(failed ? 1 : 0);

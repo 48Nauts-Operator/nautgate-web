@@ -14,7 +14,7 @@
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="NautGate releases and downloads"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="NautGate releases"><meta name="twitter:description" content="What shipped, why it mattered and where to get each public build."><meta name="twitter:image" content="https://nautgate.dev/assets/og-v2.png"><meta name="twitter:image:alt" content="NautGate releases and downloads">
   <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/style.css?v=7">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://nautgate.dev/releases.html","name":"NautGate Releases","description":"NautGate release notes, changelog and public build downloads.","url":"https://nautgate.dev/releases.html","isPartOf":{"@id":"https://nautgate.dev/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"NautGate v0.3.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.3.0"},{"@type":"ListItem","position":2,"name":"NautGate v0.2.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.2.0"},{"@type":"ListItem","position":3,"name":"NautGate v0.1.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.1.0"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nautgate.dev/"},{"@type":"ListItem","position":2,"name":"Releases","item":"https://nautgate.dev/releases.html"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://nautgate.dev/releases.html","name":"NautGate Releases","description":"NautGate release notes, changelog and public build downloads.","url":"https://nautgate.dev/releases.html","isPartOf":{"@id":"https://nautgate.dev/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"NautGate v0.4.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.4.0"},{"@type":"ListItem","position":2,"name":"NautGate v0.3.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.3.0"},{"@type":"ListItem","position":3,"name":"NautGate v0.2.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.2.0"},{"@type":"ListItem","position":4,"name":"NautGate v0.1.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.1.0"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nautgate.dev/"},{"@type":"ListItem","position":2,"name":"Releases","item":"https://nautgate.dev/releases.html"}]}]}</script>
   <script defer src="https://wave.21nauts.com/script.js" data-website-id="57597b5e-75ea-4dbb-b503-610be0e39f1c"></script>
 </head>
 <body class="editorial-page">
@@ -30,12 +30,30 @@
   <h1>Releases</h1>
   <p class="editorial-lede">What shipped, why it mattered and the evidence that each public build was ready.</p>
   <div class="release-summary">
-    <div><strong data-version>v0.3.0</strong><span>latest release</span></div>
-    <div><strong data-gh-releases>3</strong><span>public releases</span></div>
+    <div><strong data-version>v0.4.0</strong><span>latest release</span></div>
+    <div><strong data-gh-releases>4</strong><span>public releases</span></div>
   </div>
 
   <article class="release-entry">
-    <div class="release-head"><h2>v0.3.0</h2><span class="latest-tag">LATEST</span><time datetime="2026-08-20">20 August 2026</time></div>
+    <div class="release-head"><h2>v0.4.0</h2><span class="latest-tag">LATEST</span><time datetime="2026-08-21">21 August 2026</time></div>
+    <p class="release-lead">A verifiable audit trail and a fail-closed local inference boundary: operators can prove how a call was routed, keep detected PII and secrets off cloud transports, and use Claude Max from ordinary NautGate clients.</p>
+    <div class="release-group"><h3>Added</h3><ul>
+      <li>Verified Audit Trail v1 with canonical decision receipts, deterministic Merkle checkpoints, optional Securosys TSB signing, portable evidence bundles and offline verification.</li>
+      <li>Confidential routing that combines NautGate and Bowden detection, lets the operator choose an LM Studio model, and takes precedence over explicit, per-key, plugin and OAuth routes.</li>
+      <li>A server-side Claude Max transport for ordinary <code>ng_</code> clients, avoiding accidental fallback to a metered Anthropic API key.</li>
+      <li>Conversation-scoped sessions, direct session-to-Audit Log navigation, visible local-route match flags, collapsible navigation and paginated evidence receipts.</li>
+    </ul></div>
+    <div class="release-group"><h3>Fixed and verified</h3><ul>
+      <li>Static Claude Code tool documentation no longer produces false PII or secret matches; real tool arguments and results remain classified through message history.</li>
+      <li>Anthropic OAuth can no longer bypass the confidential boundary, and an unhealthy local route can probe its own recovery without ever falling back to cloud.</li>
+      <li>571 core tests, 21 attestation tests, lint and format checks, Homebrew resource verification, Compose rendering, local and hosted go-live Docker smokes, and all three multi-architecture image publications passed.</li>
+    </ul></div>
+    <p class="release-lead"><strong>Proof boundary:</strong> Verified Audit Trail is disabled until an operator configures signing. A verified bundle proves inclusion in an unchanged signed checkpoint; it does not prove that every real-world event was observed or make a system compliant by itself.</p>
+    <a class="text-link mono" href="https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.4.0">v0.4.0 on GitHub →</a>
+  </article>
+
+  <article class="release-entry">
+    <div class="release-head"><h2>v0.3.0</h2><time datetime="2026-08-20">20 August 2026</time></div>
     <p class="release-lead">Subscription-aware routing becomes a real client transport: ordinary NautGate keys can use the operator's ChatGPT plan, while every response carries enough routing evidence for clients to show what was requested, selected and actually observed.</p>
     <div class="release-group"><h3>Added</h3><ul>
       <li>ChatGPT subscription routing for explicit supported GPT models from ordinary <code>ng_</code>-authenticated clients, including streaming-compatible responses and notional savings.</li>

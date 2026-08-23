@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NautGate Releases — Changelog &amp; Downloads</title>
-  <meta name="description" content="What shipped in each NautGate release, from the first attested LLM gateway to the public CLI, Homebrew formula and multi-architecture images.">
+  <meta name="description" content="What shipped in each NautGate release, including Max Guard, the Observatory, verified audit evidence, confidential routing and public installation options.">
   <meta name="theme-color" content="#07110f">
   <link rel="canonical" href="https://nautgate.dev/releases.html">
   <link rel="alternate" type="application/rss+xml" title="NautGate engineering notes" href="https://nautgate.dev/feed.xml">
@@ -14,7 +14,7 @@
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="NautGate releases and downloads"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="NautGate releases"><meta name="twitter:description" content="What shipped, why it mattered and where to get each public build."><meta name="twitter:image" content="https://nautgate.dev/assets/og-v2.png"><meta name="twitter:image:alt" content="NautGate releases and downloads">
   <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/style.css?v=7">
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://nautgate.dev/releases.html","name":"NautGate Releases","description":"NautGate release notes, changelog and public build downloads.","url":"https://nautgate.dev/releases.html","isPartOf":{"@id":"https://nautgate.dev/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"NautGate v0.4.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.4.0"},{"@type":"ListItem","position":2,"name":"NautGate v0.3.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.3.0"},{"@type":"ListItem","position":3,"name":"NautGate v0.2.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.2.0"},{"@type":"ListItem","position":4,"name":"NautGate v0.1.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.1.0"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nautgate.dev/"},{"@type":"ListItem","position":2,"name":"Releases","item":"https://nautgate.dev/releases.html"}]}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"CollectionPage","@id":"https://nautgate.dev/releases.html","name":"NautGate Releases","description":"NautGate release notes, changelog and public build downloads.","url":"https://nautgate.dev/releases.html","isPartOf":{"@id":"https://nautgate.dev/#website"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"NautGate v0.5.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.5.0"},{"@type":"ListItem","position":2,"name":"NautGate v0.4.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.4.0"},{"@type":"ListItem","position":3,"name":"NautGate v0.3.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.3.0"},{"@type":"ListItem","position":4,"name":"NautGate v0.2.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.2.0"},{"@type":"ListItem","position":5,"name":"NautGate v0.1.0","url":"https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.1.0"}]}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://nautgate.dev/"},{"@type":"ListItem","position":2,"name":"Releases","item":"https://nautgate.dev/releases.html"}]}]}</script>
   <script defer src="https://wave.21nauts.com/script.js" data-website-id="57597b5e-75ea-4dbb-b503-610be0e39f1c"></script>
 </head>
 <body class="editorial-page">
@@ -30,12 +30,35 @@
   <h1>Releases</h1>
   <p class="editorial-lede">What shipped, why it mattered and the evidence that each public build was ready.</p>
   <div class="release-summary">
-    <div><strong data-version>v0.4.0</strong><span>latest release</span></div>
-    <div><strong data-gh-releases>4</strong><span>public releases</span></div>
+    <div><strong data-version>v0.5.0</strong><span>latest release</span></div>
+    <div><strong data-gh-releases>5</strong><span>public releases</span></div>
   </div>
 
   <article class="release-entry">
-    <div class="release-head"><h2>v0.4.0</h2><span class="latest-tag">LATEST</span><time datetime="2026-08-21">21 August 2026</time></div>
+    <div class="release-head"><h2>v0.5.0</h2><span class="latest-tag">LATEST</span><time datetime="2026-08-24">24 August 2026</time></div>
+    <p class="release-lead">Max Guard protects Claude Max capacity from runaway agent sessions, while the new Observatory turns routing, cache, quality, privacy, account and team evidence into a focused operational view.</p>
+    <div class="release-group"><h3>Max Guard</h3><ul>
+      <li>Tracks fresh input, cache reads and writes, output, requests, project-hour pressure, and rolling five-hour and weekly capacity windows—even when subscription traffic has zero API cost.</li>
+      <li>Attributes native xNaut launches by application, project, run and Claude session without requiring Claude Code's problematic <code>--bare</code> launch behavior.</li>
+      <li>Supports explicit observe, warn and pause policies. Paused requests receive a structured non-retryable response and never fall through to metered Anthropic credits.</li>
+      <li>Persists capacity reservations and reconciled usage, with auditable pause, resume and temporary authorization controls.</li>
+    </ul></div>
+    <div class="release-group"><h3>Observatory and evidence</h3><ul>
+      <li>Summary combines observed work, token-consuming projects, live Max Guard risk, Lighthouse privacy, quality, drift, traffic and paginated sessions linked to Audit Log.</li>
+      <li>Team connects active and inactive <code>ng_</code> identities to fresh input versus cache reads, compliance findings, sessions and sortable Agent Streams.</li>
+      <li>Accounts compares subscription value with API spend per provider and period, including provider status, cache use and live OpenRouter credit.</li>
+      <li>Compliance explanations show the evidence chain, measured impact and attribution limits, export JSON evidence, and label missing metadata as unavailable instead of guessing.</li>
+    </ul></div>
+    <div class="release-group"><h3>Fixed and verified</h3><ul>
+      <li>Anthropic-compatible cache reads and writes are recorded independently, and stable repeated prefixes without cache reuse can trigger Max Guard evidence.</li>
+      <li>Provider-scoped charts, confidentiality state, Lighthouse score, quality evidence, session pagination and active/inactive team windows now use their actual backing data.</li>
+      <li>593 core tests, lint and format checks, the NautRouter and documentation production builds, local and hosted go-live smokes, and all multi-architecture image publications passed.</li>
+    </ul></div>
+    <a class="text-link mono" href="https://github.com/48Nauts-Operator/NautGate/releases/tag/v0.5.0">v0.5.0 on GitHub →</a>
+  </article>
+
+  <article class="release-entry">
+    <div class="release-head"><h2>v0.4.0</h2><time datetime="2026-08-21">21 August 2026</time></div>
     <p class="release-lead">A verifiable audit trail and a fail-closed local inference boundary: operators can prove how a call was routed, keep detected PII and secrets off cloud transports, and use Claude Max from ordinary NautGate clients.</p>
     <div class="release-group"><h3>Added</h3><ul>
       <li>Verified Audit Trail v1 with canonical decision receipts, deterministic Merkle checkpoints, optional Securosys TSB signing, portable evidence bundles and offline verification.</li>

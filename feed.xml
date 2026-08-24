@@ -5,8 +5,15 @@
     <link>https://nautgate.dev/blog/</link>
     <description>Engineering notes about LLM privacy, routing, model evidence and local inference.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 17 Aug 2026 12:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 24 Aug 2026 09:00:00 +0200</lastBuildDate>
     <atom:link href="https://nautgate.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Your Agentic Workforce Needs a Circuit Breaker</title>
+      <link>https://nautgate.dev/blog/agentic-workforce-needs-a-circuit-breaker.html</link>
+      <guid isPermaLink="true">https://nautgate.dev/blog/agentic-workforce-needs-a-circuit-breaker.html</guid>
+      <pubDate>Mon, 24 Aug 2026 09:00:00 +0200</pubDate>
+      <description>One background coding agent made 320 calls and consumed 46.55 million fresh input tokens. What the incident teaches us about controlling an agentic workforce.</description>
+    </item>
     <item>
       <title>Tailscale first: the best way to run NautGate for your whole network</title>
       <link>https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html</link>

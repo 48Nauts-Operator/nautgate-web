@@ -7,6 +7,7 @@ const PAGES = [
   "/glossary.html",
   "/releases.html",
   "/blog/",
+  "/blog/when-a-safeguard-changes-your-model.html",
   "/blog/why-i-built-nautgate.html",
   "/blog/tailscale-first-network-wide-nautgate.html",
   "/blog/prove-which-model-answered.html",
@@ -16,7 +17,8 @@ const PAGES = [
 ];
 const WIDTHS = [390, 768, 1024, 1440];
 let fail = 0;
-const b = await chromium.launch();
+const b = await chromium.launch(process.env.CHROMIUM_EXECUTABLE_PATH
+  ? { executablePath: process.env.CHROMIUM_EXECUTABLE_PATH } : {});
 
 for (const page of PAGES) {
   for (const w of WIDTHS) {

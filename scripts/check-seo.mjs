@@ -7,6 +7,7 @@ const pages = [
   ["glossary.html", "https://nautgate.dev/glossary.html"],
   ["releases.html", "https://nautgate.dev/releases.html"],
   ["blog/index.html", "https://nautgate.dev/blog/"],
+  ["blog/when-a-safeguard-changes-your-model.html", "https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html"],
   ["blog/agentic-workforce-needs-a-circuit-breaker.html", "https://nautgate.dev/blog/agentic-workforce-needs-a-circuit-breaker.html"],
   ["blog/tailscale-first-network-wide-nautgate.html", "https://nautgate.dev/blog/tailscale-first-network-wide-nautgate.html"],
   ["blog/prove-which-model-answered.html", "https://nautgate.dev/blog/prove-which-model-answered.html"],
@@ -75,7 +76,7 @@ for (const file of ["privacy.html", "terms.html"]) {
 const feed = await readFile("feed.xml", "utf8");
 requireMatch(feed, /<rss version="2\.0"/, "RSS 2.0 feed");
 const feedItems = [...feed.matchAll(/<item>/g)].length;
-feedItems === 5 ? pass("RSS contains all five articles") : fail(`RSS expected 5 articles, found ${feedItems}`);
+feedItems === 6 ? pass("RSS contains all six articles") : fail(`RSS expected 6 articles, found ${feedItems}`);
 
 const card = await readFile("assets/og-v2.png");
 const png = card.subarray(1, 4).toString() === "PNG";
@@ -85,6 +86,7 @@ width === 1200 && height === 630 ? pass("share card is 1200×630 PNG") : fail(`s
 
 const blog = await readFile("blog/index.html", "utf8");
 const expectedOrder = [
+  "when-a-safeguard-changes-your-model.html",
   "agentic-workforce-needs-a-circuit-breaker.html",
   "tailscale-first-network-wide-nautgate.html",
   "prove-which-model-answered.html",

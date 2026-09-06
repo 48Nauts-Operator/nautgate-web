@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude Code Safeguards: A False-Positive Review | NautGate</title>
+  <meta name="description" content="An Anthropic safeguard switched Fable 5.1 to Opus 4.8 during xNaut development. Explore NautGate's false-positive review, model fallback evidence and report.">
+  <meta name="theme-color" content="#07110f">
+  <link rel="canonical" href="https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html">
+  <link rel="alternate" type="application/rss+xml" title="NautGate engineering notes" href="https://nautgate.dev/feed.xml">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="NautGate"><meta property="og:title" content="Claude Code Safeguards: A False-Positive Review | NautGate"><meta property="og:description" content="An Anthropic safeguard switched Fable 5.1 to Opus 4.8 during xNaut development. Explore NautGate's false-positive review, model fallback evidence and report."><meta property="og:url" content="https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html"><meta property="og:image" content="https://nautgate.dev/assets/og-v2.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="When a safeguard changes your model, keep the evidence — NautGate"><meta property="article:published_time" content="2026-09-06T19:35:12+02:00"><meta property="article:modified_time" content="2026-09-06T19:35:12+02:00"><meta property="article:author" content="48Nauts"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Claude Code Safeguards: A False-Positive Review | NautGate"><meta name="twitter:description" content="An Anthropic safeguard switched Fable 5.1 to Opus 4.8 during xNaut development. Explore NautGate's false-positive review, model fallback evidence and report."><meta name="twitter:image" content="https://nautgate.dev/assets/og-v2.png"><meta name="twitter:image:alt" content="When a safeguard changes your model, keep the evidence — NautGate">
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="/css/style.css?v=7">
+  <script defer src="https://wave.21nauts.com/script.js" data-website-id="57597b5e-75ea-4dbb-b503-610be0e39f1c"></script>
+<meta name="keywords" content="Claude Code safeguard false positive, Anthropic safeguards, LLM model degradation, model fallback, AI agent observability, model failover, NautGate SafeGuard, xNaut harness, Fable&#x27;s safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks.">
+<meta property="og:locale" content="en_US">
+<meta property="article:tag" content="Claude Code safeguard false positive">
+<meta property="article:tag" content="Anthropic safeguards">
+<meta property="article:tag" content="LLM model degradation">
+<meta property="article:tag" content="model fallback">
+<meta property="article:tag" content="AI agent observability">
+<meta property="article:tag" content="model failover">
+<meta property="article:tag" content="NautGate SafeGuard">
+<meta property="article:tag" content="xNaut harness">
+<meta property="article:tag" content="Fable&#x27;s safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks.">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html#article", "headline": "When a safeguard changes your model, keep the evidence", "description": "An Anthropic safeguard switched Fable 5.1 to Opus 4.8 during xNaut development. Explore NautGate's false-positive review, model fallback evidence and report.", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html"}, "inLanguage": "en", "dateModified": "2026-09-06T19:35:12+02:00", "author": {"@type": "Organization", "name": "48Nauts"}, "publisher": {"@type": "Organization", "name": "48Nauts", "@id": "https://nautgate.dev/#organization"}, "image": {"@type": "ImageObject", "url": "https://nautgate.dev/assets/og-v2.png", "width": 1200, "height": 630}, "keywords": ["Claude Code safeguard false positive", "Anthropic safeguards", "LLM model degradation", "model fallback", "AI agent observability", "model failover", "NautGate SafeGuard", "xNaut harness", "Fable's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks."], "articleSection": "SafeGuard incident review", "datePublished": "2026-09-06T19:35:12+02:00"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://nautgate.dev/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://nautgate.dev/blog/"}, {"@type": "ListItem", "position": 3, "name": "When a safeguard changes your model, keep the evidence", "item": "https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html"}]}]}</script>
+</head>
+<body class="editorial-page">
+<nav class="site-nav" aria-label="Primary navigation"><a class="site-logo" href="/"><img src="/assets/icon.svg" width="28" height="28" alt=""><span>NautGate</span></a><div class="site-links"><a href="/#features">Features</a><a href="/#evidence">Evidence</a><a href="/#dashboard">Dashboard</a><a href="/#faq">FAQ</a><a href="https://docs.nautgate.dev">Docs</a><a href="/glossary.html">Glossary</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a></div><div class="site-actions"><a class="github-link" href="https://github.com/48Nauts-Operator/NautGate">GitHub</a><a class="btn btn-primary btn-sm" href="https://docs.nautgate.dev">Get started</a><details class="site-menu"><summary aria-label="Open navigation"><i></i><i></i><i></i></summary><div><a href="/">Home</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a><a href="https://docs.nautgate.dev">Docs</a><a href="https://github.com/48Nauts-Operator/NautGate">GitHub</a></div></details></div></nav>
+<main class="editorial-wrap">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Blog</a><span aria-hidden="true">/</span><span aria-current="page">When a safeguard changes your model, keep the evidence</span></nav>
+  <header class="article-head"><p class="editorial-kicker">SafeGuard incident review</p><h1>When a safeguard changes your model, keep the evidence</h1><p class="editorial-lede">An Anthropic safeguard switched Fable 5.1 to Opus 4.8 during xNaut development. Explore NautGate's false-positive review, model fallback evidence and report.</p><div class="meta"><time datetime="2026-09-06">6 September 2026</time><span>·</span><span>By 48Nauts</span></div></header>
+  <article class="article-body">
+<p>We had been unable to fix an issue, and I wanted a feature that would stop us relying on a single model. If a provider goes down or a runtime cannot start, another capable model should be able to pick up the same task. The notes and code are already there. Why should the work have to wait?</p>
+<p>On 6 September, we were implementing that continuity feature in xNaut. The assistant's plan was to release the worktree when a session ends, put the task back in the queue if its runtime cannot start, and let another runtime continue from the notes and existing branch.</p>
+<p>Then the assistant read part of a local Rust source file.</p>
+<p>About seven seconds after the command was recorded, the client reported a cyber-related safeguard refusal and switched models. The client identified the switch as Fable 5.1 → Opus 4.8.</p>
+<div class="callout" role="note" aria-label="Client safeguard notice">
+<p>
+<strong>The message shown by the client</strong>
+</p>
+<p>
+Fable's safeguards flagged this message. Our intentionally broad safeguards allow us to deliver more capabilities faster, but can sometimes flag legitimate coding, cybersecurity, and biology tasks. Switched to Opus 4.8 (1M context). Send feedback with /feedback or learn more
+</p>
+</div>
+<p>So far, Anthropic is the only provider where I have encountered this kind of safeguard-driven model switch.</p>
+<p>It reminds me of the early Microsoft days. You pay for the product, then help find the problems that shipped with it. I wanted to build a feature. Instead, I was investigating why my selected model had been replaced.</p>
+<h2 id="recording-an-anthropic-safeguard-and-model-fallback">Recording an Anthropic safeguard and model fallback</h2>
+<p>The warning was visible in the client, but the incident was missing from NautGate's Safeguard view. We had no retained gateway response for the flagged call. The client's own log did contain a structured refusal and fallback event.</p>
+<p>Our capture had a gap. Looking at provider responses had missed an event the client had already reported to me.</p>
+<p>We extended SafeGuard to capture that client event, record the selected and fallback models, and link it to the available message history. The report labels it as client-reported evidence. We still don't have the original provider refusal response.</p>
+<p>NautGate already distinguishes <a href="/blog/prove-which-model-answered.html">the model requested from the model that answered</a>. SafeGuard now adds the recorded reason for this switch and the activity around it. NautGate observes the incident. Task execution and model reassignment belong to xNaut.</p>
+<h2 id="assessing-a-possible-claude-code-safeguard-false-positive">Assessing a possible Claude Code safeguard false positive</h2>
+<p>The first report gave me a backtrace. I also wanted to know whether the flag made sense for the work we were doing.</p>
+<p>The user request concerned continuing work across models. The implementation plan covered missing binaries, expired logins and provider outages. The commands we reviewed read local code. They did not execute an exploit, collect credentials or target another system.</p>
+<p>We found the plan and the final source-read command in the retained log, on the message chain leading to the refusal. That gave the review more to work with than my recollection of the incident.</p>
+<p>The report's assessment is <strong>likely false positive, with high confidence within the reviewed task</strong>. An assistant reviewed the evidence and assigned that qualitative rating. There is no calculated probability behind it, and Anthropic has not confirmed the finding.</p>
+<p>I don't need Fable's private reasoning to see that this was a request for a reliability feature. Explaining what activated the safeguard is harder. We are missing the full provider input, the original refusal response and one assistant message that the client says it retracted. The seven-second interval establishes the sequence, not which content caused the flag.</p>
+<p>The report includes those gaps alongside the evidence supporting the assessment. It also preserves earlier reviews when new information changes the assessment.</p>
+<p><img width="1280" height="1280" loading="lazy" decoding="async" src="/assets/reports/safeguard-incident/report-preview.png" alt="Public edition of NautGate&#39;s incident report, showing a likely false-positive assessment, high qualitative confidence and unconfirmed provider correction." /></p>
+<p><em>The public report omits private identifiers and internal source code. The private copy keeps the source references needed for an investigation.</em></p>
+<p><a href="/assets/reports/safeguard-incident/public-report.html">Read the public report</a> or <a href="/assets/reports/safeguard-incident/public-report.pdf">download the public report as PDF</a>.</p>
+<h2 id="llm-observability-with-nautgate-safeguard">LLM observability with NautGate SafeGuard</h2>
+<p>This incident gave us a specific set of improvements to build:</p>
+<ul>
+<li>Capture the supported client refusal-and-fallback notice as a separate event.</li>
+<li>Trace the available activity before the flag and the response from the fallback model.</li>
+<li>Attach a review with its verdict, confidence, supporting evidence and gaps.</li>
+<li>Export HTML, Markdown or JSON, with a feedback draft in the readable report.</li>
+</ul>
+<p>The workflow runs in our test environment. The new client observer currently handles the supported Claude Code log event. We still need to extend coverage to other desktop clients.</p>
+<p>The review is a separate step. A captured event without an assessment says it is awaiting review, and NautGate does not submit feedback automatically.</p>
+<h2 id="evidence-makes-feedback-more-useful">Evidence makes feedback more useful</h2>
+<p>We call this model degradation because we lost the selected model. We have not measured worse answers or found extra charges. Opus continuing the task does not prove Fable's refusal was wrong.</p>
+<p>But we can now give Anthropic something specific to investigate. Here is what we asked for. Here is the plan and the activity before the flag. Here is why we think the request was legitimate, and here is what we could not recover.</p>
+<p>We also plan to send a degradation pulse to external systems such as xNaut. When NautGate detects a supported event, it would notify the external harness. If the task's policy and permissions allow it, that harness could choose another eligible model and continue the same task from its saved state. NautGate sends the signal. xNaut decides whether to switch and handles the handoff. This is on the backlog, not enabled today.</p>
+<p>That would let xNaut respond to the interruption while keeping a record of why it changed the assignment.</p>
+<div class="callout" role="note" aria-label="Closing thought">
+<p>
+<strong>The model matters less when the harness can keep the work moving.</strong>
+</p>
+</div>
+  </article>
+  <nav class="article-more" aria-label="More from NautGate"><a href="/blog/">All engineering notes</a><a href="/glossary.html">LLM gateway glossary</a><a href="/releases.html">NautGate releases</a></nav>
+</main>
+<footer class="site-footer"><div class="footer-brand"><a class="site-logo" href="/"><img src="/assets/icon.svg" width="26" height="26" alt=""><span>NautGate</span></a><p>A memory-aware LLM gateway.<br>Built by 48Nauts in Switzerland.</p></div><div class="footer-links"><a href="/">Home</a><a href="/blog/">Blog</a><a href="/releases.html">Releases</a><a href="https://docs.nautgate.dev">Docs</a><a href="https://github.com/48Nauts-Operator/NautGate">GitHub</a></div><p class="footer-fine">© 2026 48Nauts · AGPL-3.0-or-later</p></footer>
+<script src="/js/main.js?v=7"></script>
+</body>
+</html>

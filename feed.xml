@@ -5,8 +5,15 @@
     <link>https://nautgate.dev/blog/</link>
     <description>Engineering notes about LLM privacy, routing, model evidence and local inference.</description>
     <language>en</language>
-    <lastBuildDate>Mon, 24 Aug 2026 09:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Sun, 06 Sep 2026 19:35:12 +0200</lastBuildDate>
     <atom:link href="https://nautgate.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>When a safeguard changes your model, keep the evidence</title>
+      <link>https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html</link>
+      <guid isPermaLink="true">https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html</guid>
+      <pubDate>Sun, 06 Sep 2026 19:35:12 +0200</pubDate>
+      <description>An Anthropic safeguard switched Fable 5.1 to Opus 4.8 during xNaut development. NautGate SafeGuard records the incident and supports a review with evidence.</description>
+    </item>
     <item>
       <title>Your Agentic Workforce Needs a Circuit Breaker</title>
       <link>https://nautgate.dev/blog/agentic-workforce-needs-a-circuit-breaker.html</link>

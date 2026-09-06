@@ -38,6 +38,25 @@ pandoc blog/tailscale-first-network-wide-nautgate.md \
 
 ## Develop
 
+For the SafeGuard article, regenerate the page with its search title, keywords,
+social metadata and structured data using:
+
+```bash
+python3 scripts/render-blog.py blog/when-a-safeguard-changes-your-model.md
+```
+
+The renderer preserves literal quote punctuation. `status: draft` keeps the page
+`noindex,nofollow`, omits publication-date claims and excludes analytics. Keywords
+are maintained in frontmatter and included in article metadata; Google does not
+use the `meta keywords` tag as a ranking signal
+([Google guidance](https://developers.google.com/search/docs/crawling-indexing/special-tags)).
+The relevant phrases also appear naturally in the title, headings and article text.
+
+Before an authorized publication, set the actual publication date/status,
+remove the draft category label, regenerate, and add the article to the RSS feed,
+sitemap and their validation expectations. No publication is performed by the
+renderer itself.
+
 ```bash
 just serve      # python -m http.server 4321
 just check-seo  # metadata, canonicals, JSON-LD, sitemap, feed and share card

@@ -215,8 +215,25 @@
     </div>
   </section>
 
+  <section class="ng-section proof-section" id="proof">
+    <div class="proof-copy">
+      <p class="kicker">05 — Signed evidence · Enterprise</p>
+      <h2>Every route becomes a proven event.</h2>
+      <p>Each completed decision leaves a canonical receipt: which request, which route, which model answered, what it cost. Receipts are hashed into an ordered Merkle tree, and a <strong>Securosys</strong> Transaction Security Broker signs the checkpoint inside the HSM. The key never leaves the hardware. Anyone holding the public key can verify, offline, that a receipt sat in a signed checkpoint and has not changed since.</p>
+      <div class="mini-stats"><div><strong>0</strong><span>prompt bytes in a receipt</span></div><div><strong>1</strong><span>HSM signature per checkpoint</span></div><div><strong>offline</strong><span>verification, public key only</span></div></div>
+      <a class="text-link mono" href="https://github.com/48Nauts-Operator/NautGate/tree/main/docs/specs/audit-v1" target="_blank" rel="noopener">Read the audit-v1 byte contract →</a>
+    </div>
+    <div class="chain-card mono">
+      <div><small>1 · receipt</small><strong>SHA256("NAUTGATE-DECISION-RECEIPT-V1" ‖ receipt)</strong><span>hashes and routing metadata, no prompt or response text, no credentials</span></div>
+      <div><small>2 · checkpoint</small><strong>Merkle root over the receipt range</strong><span>range, count, instance and prior checkpoint bound into the payload</span></div>
+      <div><small>3 · signature</small><strong class="accent">Securosys TSB → RSA/SHA-256, in the HSM</strong><span>traffic keeps flowing while the signer is down; receipts stay pending, never lost</span></div>
+      <div><small>4 · bundle</small><strong>selective-disclosure proof</strong><span>one receipt, its Merkle path, the signed checkpoint: verifiable by a third party</span></div>
+      <p>Proves inclusion and integrity. Does not claim which weights a provider ran or that captured input was truthful; the spec says so.</p>
+    </div>
+  </section>
+
   <section class="ng-section connections-section">
-    <div class="section-intro centered"><p class="kicker">05 — Point anything at it</p><h2>One endpoint in. Any provider out.</h2></div>
+    <div class="section-intro centered"><p class="kicker">06 — Point anything at it</p><h2>One endpoint in. Any provider out.</h2></div>
     <div class="connection-grid">
       <div><span class="mono">Clients in</span><p>Claude Code · Codex · Pi · Cline · OpenCode · your own app</p></div>
       <div><span class="mono">Formats</span><p>OpenAI Chat · Anthropic Messages · OpenAI Responses · OAuth passthrough</p></div>
@@ -225,7 +242,7 @@
   </section>
 
   <section class="ng-section compare-section">
-    <div class="section-intro"><p class="kicker">06 — How it differs</p><h2>Not just a gateway. A gateway that remembers.</h2></div>
+    <div class="section-intro"><p class="kicker">07 — How it differs</p><h2>Not just a gateway. A gateway that remembers.</h2></div>
     <div class="difference-grid">
       <article><span class="mono accent">Attestation</span><h3>We record the model that actually served.</h3><p>Read from the provider's own response, not the model the caller asked for. It makes the cost, drift and compliance numbers trustworthy.</p></article>
       <article><span class="mono accent">Subscription saved</span><h3>What your flat-rate plan covered.</h3><p>See the notional list price your Max or Plus subscription absorbed — the number that helps justify the plan.</p></article>
@@ -252,7 +269,7 @@
   </section>
 
   <section class="ng-section faq-section" id="faq">
-    <div class="section-intro centered"><p class="kicker">07 — FAQ</p><h2>Frequently asked questions.</h2><p>The practical details about subscriptions, local models and the licence.</p></div>
+    <div class="section-intro centered"><p class="kicker">08 — FAQ</p><h2>Frequently asked questions.</h2><p>The practical details about subscriptions, local models and the licence.</p></div>
     <div class="ng-faq">
       <details><summary>Does this work with my Claude Max plan?</summary><p>Yes — subscription traffic passes through untouched and stays free, and it is still fully logged. Routing to a different model uses a metered key instead, so those calls are billed by whichever provider serves them.</p></details>
       <details><summary>How do you know which model really answered?</summary><p>It is parsed from the provider's own response, never copied from the request. You can cross-check any call against your provider's billing dashboard — the token counts line up exactly.</p></details>

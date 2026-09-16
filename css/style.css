@@ -996,8 +996,11 @@ dialog.termbox .related button strong {
   text-align: center;
 }
 .hero-product-shot a { display: block; }
-.hero-product-shot img {
+.hero-product-shot img,
+.hero-product-shot video {
   width: 100%;
+  display: block;
+  background: #000;
   border: 1px solid var(--ng-line-strong);
   border-bottom: 0;
   border-radius: var(--ng-radius) var(--ng-radius) 0 0;

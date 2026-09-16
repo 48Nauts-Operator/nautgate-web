@@ -1146,8 +1146,8 @@ dialog.termbox .related button strong {
 @media (max-width: 900px) { .lab-grid { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .lab-step { transition: none; } }
 .partner-strip { display: flex; align-items: center; gap: clamp(24px, 4vw, 56px); margin: -56px 6vw 0; padding: 22px clamp(20px, 3vw, 32px); background: var(--ng-panel); border: 1px solid var(--ng-line-strong); border-radius: var(--ng-radius); }
-.partner-logo { flex: 0 0 auto; display: flex; align-items: center; padding: 10px 14px; background: #f0f0e4; border-radius: 8px; }
-.partner-logo img { display: block; width: 160px; height: 40px; }
+.partner-name { flex: 0 0 auto; padding: 10px 18px; border: 1px solid var(--ng-line-strong); border-radius: 8px; color: var(--ng-text); font-family: "Space Grotesk", sans-serif; font-size: 20px; letter-spacing: -.01em; text-decoration: none; }
+.partner-name:hover { border-color: var(--brand-lift); color: var(--brand-lift); }
 .partner-copy { flex: 1; min-width: 0; }
 .partner-copy .kicker { margin: 0 0 6px; }
 .partner-copy p:not(.kicker) { margin: 0; color: var(--ng-soft); font-size: 14px; line-height: 1.65; max-width: 70ch; }

@@ -1,0 +1,110 @@
+{
+  "bundle_schema": "dev.nautgate.evidence-bundle/v1",
+  "receipt": {
+    "client": {
+      "agent_id": "master",
+      "protocol": "openai_chat",
+      "nautgate_key_id": "083574f348d64700b763ff64598e117d"
+    },
+    "result": {
+      "status": "success",
+      "error_code": null,
+      "input_tokens": 11,
+      "cost_microusd": 7,
+      "finish_reason": "length",
+      "output_tokens": 20,
+      "response_sha256": "57fbc4038974c51bf3428691f2c5751af630d8b74691b73089dba0bc82b3b07a",
+      "upstream_status": 200
+    },
+    "schema": "dev.nautgate.decision-receipt/v1",
+    "request": {
+      "stream": false,
+      "body_sha256": "e39662d586a3ecc244f6a8a45d845501c3f3c6b2879f2b5c8a22bf2714738687",
+      "tools_sha256": null,
+      "prompt_sha256": "64c21473432ed184bf9479ce9556ba62bc0168f7e9313df4b3c3941b33a73c5f",
+      "requested_model": "auto",
+      "upstream_body_sha256": "d1800b378151eafffda45daeb643e5de6572b456c9e7ccb8e59725d249270dd9"
+    },
+    "routing": {
+      "reason_code": "auto:fast->openrouter/openrouter/deepseek/deepseek-v4-flash",
+      "substituted": false,
+      "observed_model": "deepseek/deepseek-v4-flash",
+      "selected_model": "openrouter/deepseek/deepseek-v4-flash",
+      "fallback_attempts": [],
+      "observed_provider": "StreamLake",
+      "selected_provider": "openrouter",
+      "selected_transport": "openrouter"
+    },
+    "runtime": {
+      "instance_id": "default",
+      "build_digest": null,
+      "config_sha256": null,
+      "nautgate_version": "0.5.1"
+    },
+    "sequence": 117493,
+    "receipt_id": "e42f2bee-1a0c-4fe5-b1b3-34dc12e6a15e",
+    "started_at": "2026-09-16T21:26:01.918270Z",
+    "decision_id": "34216216-5904-4898-a5ee-7c4437296e1c",
+    "completed_at": "2026-09-16T21:26:04.533097Z",
+    "tool_evidence": {
+      "events_sha256": null,
+      "calls_observed": 0,
+      "executions_observed": 0
+    },
+    "classification": {
+      "sensitivity": "none",
+      "policy_sha256": "f7c3461b12b8c59981a56740dd9f624e65339ce456e4abf882c7032a32519e1b",
+      "policy_version": "confidentiality-routing/v1",
+      "signals_sha256": null
+    }
+  },
+  "receipt_hash": "9fb543bd1a91b814ac92226c3ef9e83494275b10b2eb6c2c09e3572108f6c681",
+  "leaf_index": 492,
+  "merkle_proof": [
+    {
+      "hash": "bd584b3fa38e6d54b34d1529c5ff0fdab44f44615568e68df063ae4299cb89f5",
+      "side": "left"
+    },
+    {
+      "hash": "f64d1c400415229cf13dc654c11e656745743db9bb2fdd6d3685f9b66fd06e37",
+      "side": "left"
+    },
+    {
+      "hash": "27f631f5f4324366311b883b788da53be9aaf1fdf7513e62f758a240fffcdf8e",
+      "side": "left"
+    },
+    {
+      "hash": "800922b8ed6b939902effd8942c62eb3797fb9f1472a02868db8e02bc0ea8d05",
+      "side": "left"
+    },
+    {
+      "hash": "44027f80e82ddd2b0de8a5dedd660fc9a7a3ebdd32bd111f5fe372a08cc9380a",
+      "side": "left"
+    },
+    {
+      "hash": "f15338a5359f5f171c0602aef79473f644e42e92e6fd702921c582378ca6747c",
+      "side": "left"
+    }
+  ],
+  "checkpoint": {
+    "schema": "dev.nautgate.audit-checkpoint/v1",
+    "closed_at": "2026-09-16T21:26:04.533097Z",
+    "opened_at": "2026-09-16T10:18:12.029177Z",
+    "instance_id": "stargate",
+    "merkle_root": "913c0377aea10ea5b86e0739ed23f00113d9e3620511c1029118680d701717dc",
+    "checkpoint_id": "8495a96a-1c7a-570a-b312-757ad20b9cdf",
+    "last_sequence": 117493,
+    "receipt_count": 493,
+    "first_sequence": 117001,
+    "signing_key_id": "NAUTGATE_AUDIT_KEY",
+    "merkle_algorithm": "sha256-binary-v1",
+    "previous_checkpoint_sha256": "93583bbb3d2c77768b7a71f80a8ec7773fa7d5ed7ad7f34a3031845eb9560b59"
+  },
+  "signature": {
+    "algorithm": "SHA256_WITH_RSA",
+    "encoding": "base64-der",
+    "value": "SVVsPCcwWJ9/OzWExytma95zE/u10iRL8K8TV/daiZ3rrQqMhCGAHWvQDc0PV3U4kv092JleuStj/cOfvTFCOVxZ56Qpv03bIvkHYmCx+T+sjDSkN7rprc4YhmcJHpLZYXXApKq8yA9ARW6hWdH7KeC3wZ912aVmX7e/V2J1EKbwwkkKmcSIIcbsDvgS++rJWvdROsz3vtHB2/H9EfaU1xxfPQC9Z59ebTP9K5772ClGjhHL6lAPjuHbjV8JhQVarnwmExJjLAxVCX50//2Xu3+JiPLQuq0HjzdYQfW3oguAtPceO0A8eDGl3XTalpmvupxu4soaaiGz1UvKRC9p/tFLRO3WjK1pQXdNXiYmN2VLPeYJqeFdOEfztBG3BF9rTdD/1Bco0x6kWsSNg4BMVBD0sPaDcYs4D80EiuhwLKN8P7XFgTSy/svnDVDKpeAbq2qw6Eg8cL09Y8HCeXDyVld9lWz94WFXsgX4jTqB0LBnrr+JLS7QcTIZVbUDQC+Ixlvu/vJV9jIohqgoPv9KK/R53BS557Sm5Vxh6zfMq+PDUBHCmf6I2Uo4BJuA27hEItfL7zHYzHrers4H1yrClqfgLkXez6pyEHmCA6VQxp0aY/mL56MsIYOIIz+igVCvMgh6jnC3zHwZ/6C1IzpelcvaaCtWPLkRJZztRIm41eY=",
+    "key_id": "NAUTGATE_AUDIT_KEY",
+    "public_key_fingerprint": "54922529a30f6c2cab0d701dec8402280f1a55dc0f8da300de8a1c1c374bab4c"
+  }
+}

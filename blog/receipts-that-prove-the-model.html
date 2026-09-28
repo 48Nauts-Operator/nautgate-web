@@ -62,7 +62,6 @@ Two approved deployments, one weight digest on every receipt. A request for anyt
 <p>But behavior can be checked. Because receipts now record seed and temperature, NautGate can replay a sample of requests that ran under deterministic settings and compare the answers. Same input, same seed, different answer means the provider changed the model underneath you, silently.</p>
 <p>I call this behavioral attestation. It ships next, not today. I am stating it plainly because as far as I can tell, no other tool even claims to detect this. The fields landing today are what make it possible.</p>
 <h2 id="what-this-does-not-claim">What this does not claim</h2>
-<p>Honest limits, as always:</p>
 <ul>
 <li>Watermarks prove origin class. Receipts prove the specific exchange. They are different claims and I will not blur them.</li>
 <li>Vendor models cannot be weight-pinned. They can only be behaviorally checked. Local models get the digest; remote models get the replay.</li>

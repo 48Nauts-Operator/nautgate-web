@@ -205,8 +205,6 @@ make it possible.
 
 ## What this does not claim
 
-Honest limits, as always:
-
 - Watermarks prove origin class. Receipts prove the specific exchange. They
   are different claims and I will not blur them.
 - Vendor models cannot be weight-pinned. They can only be behaviorally

@@ -10,8 +10,8 @@ status: published
 
 # Receipts that prove the model
 
-At a recent security event, a solution architect from a Swiss HSM vendor
-described NautGate on stage as a tool that tracks what your AI client is
+At a recent security event, a solution architect from
+[Securosys](https://www.securosys.com) described NautGate on stage as a tool that tracks what your AI client is
 sending outside of your machine to the model. And then the part that made my
 week: they had suggested that if NautGate produces audit logs and reports, it
 should sign them. The release that does exactly that shipped within a day of
@@ -20,7 +20,7 @@ that conversation.
 Their framing is the cleanest description of where the pieces sit. Their demo
 gateway sits between the human and the client. NautGate sits between the client
 and the model. Everything NautGate records can now be signed through Merkle
-checkpoints against a hardware security module.
+checkpoints against a Securosys CloudsHSM.
 
 That was the signing story. Today's release is about what the receipts actually
 say. Three new fields, and one feature on deck that I think is the real point

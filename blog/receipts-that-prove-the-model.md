@@ -203,6 +203,27 @@ I call this behavioral attestation. It ships next, not today. I am stating it pl
 tool even claims to detect this. The fields landing today are what
 make it possible.
 
+## The oracle problem, again
+
+The blockchain world hit this wall years ago. Smart contracts could prove
+their computation perfectly, and it meant nothing, because the data feeding
+them could not be proven. They called it the oracle problem, and an entire
+industry grew around provable data sources.
+
+AI decisioning stands at the same wall, from the other side. Take a firm
+doing AI-driven financial forecasting. Portfolio decisions come out of a
+model. Which model? The one on the invoice? The quantized variant a
+datacenter quietly served that week? If a regulator or their own risk desk
+asks in March what produced October's forecast, "we use model X" is not an
+answer. It is a tag.
+
+Sharper still: an AI manages a basket of cryptocurrencies. Every rebalance is
+an on-chain transaction, provable forever. Nothing proves why. The industry
+that solved provable inputs runs its own decisions on unprovable models.
+
+The forecast can be wrong; models are allowed to be wrong. What cannot be
+wrong is the record of what produced it. That record is the receipt.
+
 ## What this does not claim
 
 - Watermarks prove origin class. Receipts prove the specific exchange. They

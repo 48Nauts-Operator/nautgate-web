@@ -17,7 +17,7 @@ week: they had suggested that if NautGate produces audit logs and reports, it
 should sign them. The release that does exactly that shipped within a day of
 that conversation.
 
-Their framing is the cleanest description of where the pieces sit. Their demo
+Their framing, [in the talk itself](https://www.youtube.com/watch?v=UjdORkATA0Q), is the cleanest description of where the pieces sit. Their demo
 gateway sits between the human and the client. NautGate sits between the client
 and the model. Everything NautGate records can now be signed through Merkle
 checkpoints against a Securosys CloudsHSM.

@@ -38,7 +38,7 @@ weight-manifest digest of the model that answered. "Which model answered"
 upgrades from a label in a response header to a cryptographic claim about the
 weights on disk.
 
-Concretely: you run Qwen3 at Infomaniak and a backup route at a second
+Concretely: you run Qwen3 at [Infomaniak](https://www.infomaniak.com) and a backup route at a second
 datacenter with the same model. The gateway switches on cost, load or
 availability, and every receipt carries the weight digest of whichever site
 answered. Two sites, one digest: provable. And because the gateway only holds

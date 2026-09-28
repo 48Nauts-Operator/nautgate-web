@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NautGate · Verified Audit Trail · Decision receipt</title>
+<style>
+:root{color-scheme:dark;--ink:#E6EBF2;--muted:#8893A4;--line:#232B36;--accent:#C3CE1F;--paper:#12161F;--soft:#1A2029;--bg:#0A0D12;--brand:#808000;--good:#3FB950;--warn:#D6A100;--bad:#E5484D}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:980px;margin:32px auto;background:var(--paper);box-shadow:0 8px 40px #20334012}
+header{padding:26px 48px;background:var(--bg);border-top:4px solid var(--brand);display:flex;justify-content:space-between;align-items:center}
+.brandwrap{display:flex;align-items:center;gap:14px}
+.brand{font-size:24px;font-weight:750;letter-spacing:-.6px}
+.eyebrow{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:650}
+header .eyebrow{color:var(--accent)}
+.stamp{font-size:12px;color:var(--muted);text-align:right}
+.hero,section{padding:34px 48px}.hero{padding-bottom:26px}
+h1{font-size:36px;line-height:1.14;letter-spacing:-1.2px;margin:10px 0 12px}
+h1.ok{color:var(--good)}h1.pending{color:var(--warn)}h1.bad{color:var(--bad)}
+.lede{font-size:16px;color:var(--muted);max-width:760px}
+.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.badge{font-size:12px;font-weight:650;border:1px solid var(--line);border-radius:4px;padding:5px 10px;background:var(--soft)}
+.metrics{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:26px}
+.metric{padding:16px 12px 16px 0}.metric b{display:block;font-size:16px;margin-top:5px;overflow-wrap:anywhere}
+.metric span{color:var(--muted);font-size:12px}
+section{border-top:1px solid var(--line)}
+h2{font-size:21px;line-height:1.3;margin:0 0 16px;letter-spacing:-.4px}
+dl{display:grid;grid-template-columns:200px 1fr;gap:10px;font-size:13px}
+dt{color:var(--muted)}dd{margin:0;overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12.5px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--bg);border-left:3px solid var(--brand);padding:14px;margin:14px 0 0}
+.note{font-size:13px;color:var(--muted)}
+footer{padding:22px 48px;background:var(--bg);font-size:12px;color:var(--muted)}
+.print-tip{float:right}
+@media (max-width:700px){main{margin:0}header,.hero,section,footer{padding:24px}h1{font-size:28px}.metrics{grid-template-columns:1fr}.metric{border-bottom:1px solid var(--line)}.stamp,.print-tip{display:none}dl{grid-template-columns:1fr;gap:4px}dd{margin-bottom:12px}}
+@media print{:root{color-scheme:light;--ink:#172331;--muted:#576674;--line:#dce3e7;--accent:#626800;--paper:#fff;--soft:#f3f4f0;--bg:#fff;--good:#186b3c;--warn:#8a5d00;--bad:#a3403c}
+body{background:white;font-size:11px}main{max-width:none;margin:0;box-shadow:none}
+header{background:white;color:var(--ink);border-bottom:2px solid var(--ink)}
+.hero,section{padding:22px 28px}h1{font-size:26px}h2{break-after:avoid}.print-tip{display:none}
+pre{font-size:10px}footer{padding:14px 28px}}
+</style></head><body><main>
+<header><div class="brandwrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30" height="30" role="img" aria-label="NautGate"><rect width="32" height="32" rx="7" fill="#808000"/><rect x="4.5" y="8.5" width="23" height="6.6" rx="1" fill="#0A0B00"/><rect x="7.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/><rect x="13.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/><rect x="19.5" y="19.8" width="5" height="5" rx="0.9" fill="#0A0B00"/></svg><div><div class="brand">NautGate</div>
+<div class="eyebrow">Verified Audit Trail · Decision receipt</div></div></div>
+<div class="stamp">2026-09-28T15:36:58.257698Z<br>Signed evidence edition</div></header>
+
+<div class="hero">
+  
+  <div class="eyebrow">Verified Audit Trail</div>
+  <h1 class="ok">Attested decision receipt</h1>
+  <p class="lede">Cryptographic record of one model decision: what was asked, which model
+  answered under which settings, in which environment, signed into the hardware-backed
+  audit chain.</p>
+  <div class="badges"><span class="badge">ATTESTED</span><span class="badge">capture: gateway</span><span class="badge">protocol: openai_chat</span><span class="badge">success</span></div>
+  <div class="metrics">
+    <div class="metric"><span>Model observed</span><b>deepseek/deepseek-v4-flash</b></div>
+    <div class="metric"><span>Evidence sequence</span><b>204597</b></div>
+    <div class="metric"><span>Completed</span><b>2026-09-28T15:36:58.257698Z</b></div>
+  </div>
+</div>
+
+<section><h2>Transaction</h2><dl><dt>Receipt</dt><dd>f0d3b8a0-69f3-473f-83d6-0cbb72edaaef</dd><dt>Decision</dt><dd>acebbe92-c837-41c2-bc12-30e8dcc5c67f</dd><dt>Started</dt><dd>2026-09-28T15:36:56.828671Z</dd><dt>Completed</dt><dd>2026-09-28T15:36:58.257698Z</dd><dt>Agent</dt><dd>pi</dd><dt>Harness</dt><dd>example-client/1.0</dd><dt>Sandbox</dt><dd>example-sandbox</dd><dt>Capture path</dt><dd>gateway</dd></dl></section>
+
+<section><h2>Model and routing</h2><dl><dt>Requested model</dt><dd>auto</dd><dt>Selected model</dt><dd>openrouter/deepseek/deepseek-v4-flash</dd><dt>Observed model</dt><dd>deepseek/deepseek-v4-flash</dd><dt>Provider</dt><dd>openrouter</dd><dt>Substituted</dt><dd>False</dd><dt>Weights digest</dt><dd>—</dd><dt>Digest source</dt><dd>unresolved</dd></dl></section>
+
+<section><h2>Sampling · determinism evidence</h2><dl><dt>temperature</dt><dd>0</dd><dt>top_p</dt><dd>—</dd><dt>seed</dt><dd>7</dd><dt>Provider fingerprint</dt><dd>—</dd></dl></section>
+
+<section><h2>Result</h2><dl><dt>Status</dt><dd>success (upstream 200)</dd><dt>Finish reason</dt><dd>stop</dd><dt>Tokens in / out</dt><dd>8 / 2</dd><dt>Request body sha256</dt><dd>a36541c4268aa5eea46c017694b1519a8ab678bf66af6631fce8332337b88a8e</dd><dt>Response sha256</dt><dd>e90e131c0e7e012a098de39633d4a83764ae08996604a3c14f660e9d2c99e428</dd></dl></section>
+
+<section><h2>Attestation</h2><dl><dt>Checkpoint</dt><dd>cdbe21b5-d67d-520f-be23-432dd417d4a5</dd><dt>Signing key</dt><dd>NAUTGATE_AUDIT_KEY</dd><dt>Key fingerprint</dt><dd>54922529a30f6c2cab0d701dec8402280f1a55dc0f8da300de8a1c1c374bab4c</dd><dt>NautGate version</dt><dd>0.5.1</dd><dt>Instance</dt><dd>default</dd></dl>
+<h2 style="margin-top:26px">Independent verification</h2>
+<pre>nautgate receipt verify evidence-f0d3b8a0-69f3-473f-83d6-0cbb72edaaef.json --public-key &lt;trusted-public-key.pem&gt;</pre>
+<p class="note">This report is a rendering of the canonical receipt. The receipt's canonical
+JSON, not this page, is the signed evidence; verify it with the command above against a
+public key obtained out of band.</p></section>
+
+<footer>NautGate · memory-aware LLM gateway · verified audit trail · generated 28 September 2026 20:24 UTC
+<span class="print-tip">Browser Print → Save as PDF</span></footer>
+</main></body></html>

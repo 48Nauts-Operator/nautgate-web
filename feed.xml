@@ -8,6 +8,13 @@
     <lastBuildDate>Sun, 06 Sep 2026 19:35:12 +0200</lastBuildDate>
     <atom:link href="https://nautgate.dev/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Receipts that prove the model</title>
+      <link>https://nautgate.dev/blog/receipts-that-prove-the-model.html</link>
+      <guid isPermaLink="true">https://nautgate.dev/blog/receipts-that-prove-the-model.html</guid>
+      <pubDate>Sun, 28 Sep 2026 21:00:00 +0200</pubDate>
+      <description>Audit receipts now carry weight-manifest digests, sampling settings and an environment block. And next: catching silent model swaps behind vendor APIs.</description>
+    </item>
+    <item>
       <title>When a safeguard changes your model, keep the evidence</title>
       <link>https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html</link>
       <guid isPermaLink="true">https://nautgate.dev/blog/when-a-safeguard-changes-your-model.html</guid>

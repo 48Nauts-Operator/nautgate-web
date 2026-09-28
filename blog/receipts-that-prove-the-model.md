@@ -84,17 +84,9 @@ nautgate receipt verify evidence-<id>.json --public-key <trusted.pem>
 The trust-grade path never requires trusting the NautGate instance that issued
 the receipt. You verify offline, against a public key you obtained out of band.
 
-This is what the QR loop looks like from a phone, on a real receipt from my
-test instance:
-
-<figure>
-<img src="/assets/screenshots/receipt-verify-phone.png" alt="Phone showing the NautGate receipt verification page: VERIFIED in green, with sequence, checkpoint, signing key and key fingerprint" style="max-width:340px;width:100%;border:1px solid #232B36;border-radius:8px">
-<figcaption>Scan the QR on the receipt PDF, get the verdict: VERIFIED, with the checkpoint and the hardware key fingerprint to compare against the printed page.</figcaption>
-</figure>
-
-And here is [a full example receipt report](/assets/reports/decision-receipt-example/receipt-report.html),
-generated from that same receipt (client identifiers swapped for neutral ones,
-everything else exactly as the gateway rendered it).
+Here is [a full example receipt report](/assets/reports/decision-receipt-example/receipt-report.html),
+generated from a real receipt on my test instance (client identifiers swapped
+for neutral ones, everything else exactly as the gateway rendered it).
 
 
 ## The flow, drawn
